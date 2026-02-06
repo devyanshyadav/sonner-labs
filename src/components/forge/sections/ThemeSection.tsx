@@ -10,29 +10,41 @@ import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
 export const ThemeSection: React.FC = () => {
     const { config, setConfig } = useToastForgeContext();
     return (
-        <div className="grid grid-cols-1 gap-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="grid grid-cols-1 gap-3 animate-in fade-in slide-in-from-bottom-4 duration-300">
             {THEMES.map((t) => (
                 <div key={t.id} className="overflow-hidden">
-                    <Card>
-                        <Button
-                            variant={config.theme.id === t.id ? 'default' : 'ghost'}
-                            onClick={() => setConfig(prev => ({ ...prev, theme: t }))}
-                            size="lg"
-                            asChild
-                        >
-                            <button className="w-full justify-start">
-                                <span className="flex items-center gap-4 w-full text-left">
-                                    <span className="w-10 h-10 rounded-lg shrink-0 border border-border" style={{ background: t.colors.background }}>
-                                        <span className="block w-full h-1 mt-auto" style={{ background: t.colors.icon, borderRadius: '0 0 8px 8px' }} />
-                                    </span>
-                                    <span className="flex-1 min-w-0">
-                                        <span className="font-semibold text-sm tracking-tight block">{t.name}</span>
-                                        <span className="text-xs line-clamp-1 opacity-70">{t.description}</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </Button>
-                    </Card>
+                    {(() => {
+                        const previewColors = config.previewMode === 'dark'
+                            ? t.dark || t.colors
+                            : t.light || t.colors;
+
+                        return (
+                            <Card>
+                                <Button
+                                    variant={config.theme.id === t.id ? 'default' : 'ghost'}
+                                    onClick={() => setConfig(prev => ({ ...prev, theme: t }))}
+                                    size="lg"
+                                    asChild
+                                >
+                                    <button className="w-full justify-start">
+                                        <span className="flex items-center gap-4 w-full text-left">
+                                            <span className="w-10 h-10 rounded-lg shrink-0 border border-border overflow-hidden relative" style={{ background: previewColors.background }}>
+                                                <span className="absolute inset-x-0 bottom-0 h-1.5" style={{ background: previewColors.icon }} />
+                                                {/* Visual indicator for dual mode support */}
+                                                {t.light && t.dark && (
+                                                    <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-primary/20 border border-primary/30" title="Supports Light & Dark" />
+                                                )}
+                                            </span>
+                                            <span className="flex-1 min-w-0">
+                                                <span className="font-semibold text-sm tracking-tight block">{t.name}</span>
+                                                <span className="text-xs line-clamp-1 opacity-70 italic">{t.vibe}</span>
+                                            </span>
+                                        </span>
+                                    </button>
+                                </Button>
+                            </Card>
+                        );
+                    })()}
                 </div>
             ))}
         </div>

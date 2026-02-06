@@ -18,7 +18,7 @@ export const MotionSection: React.FC = () => {
     ];
 
     return (
-        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-300">
             <section className="space-y-4 px-1">
                 <Label className="text-xs font-black text-muted-foreground uppercase tracking-widest block">Toaster Position</Label>
                 <div className="grid grid-cols-3 gap-2">

@@ -20,7 +20,7 @@ export const IconSection: React.FC = () => {
         getIconForState
     } = useToastForgeContext();
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
             <div className="grid grid-cols-3 gap-2">
                 {(['success', 'error', 'warning', 'info', 'loading', 'default'] as ToastType[]).map(state => (
                     <Button

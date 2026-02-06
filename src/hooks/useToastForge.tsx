@@ -1,6 +1,7 @@
 
-import { useState, useCallback, useRef, useMemo } from 'react';
+import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
+import { useTheme } from 'next-themes';
 import { ToastConfig, ToastType, StateIconConfig, SoundPreset, ToastTheme } from '@/types/types';
 import { THEMES } from '@/constants/constants';
 import {
@@ -78,6 +79,33 @@ export function useToastForge() {
     });
 
     const [activeTab, setActiveTab] = useState('themes');
+    const { resolvedTheme } = useTheme();
+
+    // Sync previewMode with global theme
+    useEffect(() => {
+        if (resolvedTheme) {
+            setConfig(prev => ({ ...prev, previewMode: resolvedTheme as 'light' | 'dark' }));
+        }
+    }, [resolvedTheme]);
+
+    // Sync theme colors when previewMode or selected theme changes
+    useEffect(() => {
+        const selectedTheme = THEMES.find(t => t.id === config.theme.id);
+        if (!selectedTheme) return;
+
+        const modeColors = config.previewMode === 'dark'
+            ? selectedTheme.dark || selectedTheme.colors
+            : selectedTheme.light || selectedTheme.colors;
+
+        setConfig(prev => ({
+            ...prev,
+            theme: {
+                ...prev.theme,
+                colors: modeColors
+            }
+        }));
+    }, [config.previewMode, config.theme.id]);
+
     const [editingIconState, setEditingIconState] = useState<ToastType>('success');
     const audioCtxRef = useRef<AudioContext | null>(null);
 

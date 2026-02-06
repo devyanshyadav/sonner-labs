@@ -10,18 +10,22 @@ export interface StateIconConfig {
     customSvg: string;
 }
 
+export interface ThemeColors {
+    background: string;
+    border: string;
+    text: string;
+    description: string;
+    icon: string;
+}
+
 export interface ToastTheme {
     id: string;
     name: string;
     vibe: string;
     description: string;
-    colors: {
-        background: string;
-        border: string;
-        text: string;
-        description: string;
-        icon: string;
-    };
+    colors: ThemeColors;
+    light?: ThemeColors;
+    dark?: ThemeColors;
     borderRadius: string;
     borderWidth: string;
     boxShadow: string;

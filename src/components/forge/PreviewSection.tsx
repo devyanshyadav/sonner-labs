@@ -35,9 +35,9 @@ export const PreviewSection: React.FC = () => {
         getIconForState
     } = useToastForgeContext();
     return (
-        <main className={`flex-1 flex flex-col relative overflow-hidden duration-700 ease-in-out bg-background`}>
+        <main className={`flex-1 flex flex-col relative overflow-hidden bg-background`}>
             {/* Background Orbs */}
-            <div className={`absolute inset-0 pointer-events-none transition-opacity duration-1000 opacity-5`}>
+            <div className={`absolute inset-0 pointer-events-none opacity-5`}>
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary blur-[180px] rounded-full animate-pulse" />
                 <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary blur-[180px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
             </div>
@@ -49,27 +49,24 @@ export const PreviewSection: React.FC = () => {
                         {config.theme.name}
                     </Badge>
 
+
+
+                </div>
+                <div className='flex items-center gap-2'>
+
+
+                    <ThemeToggle />
+
                     <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => setConfig(prev => ({ ...prev, previewMode: prev.previewMode === 'dark' ? 'light' : 'dark' }))}
+                        variant="outline"
+                        size="icon"
+                        asChild
                     >
-                        {config.previewMode === 'dark' ? <Sun className="w-4 h-4 text-chart-4" /> : <Moon className="w-4 h-4 text-primary" />}
-                        {config.previewMode} mode
+                        <a href="https://github.com/emilkowalski/sonner" target="_blank" rel="noreferrer">
+                            <Github className="w-5 h-5" />
+                        </a>
                     </Button>
                 </div>
-
-                <ThemeToggle />
-
-                <Button
-                    variant="outline"
-                    size="icon"
-                    asChild
-                >
-                    <a href="https://github.com/emilkowalski/sonner" target="_blank" rel="noreferrer">
-                        <Github className="w-5 h-5" />
-                    </a>
-                </Button>
             </header>
 
             <div className="flex-1 flex flex-col items-center justify-center p-8 md:p-24 z-20 text-center relative max-w-5xl mx-auto">
@@ -80,11 +77,11 @@ export const PreviewSection: React.FC = () => {
                     </Badge>
                 </div>
 
-                <h2 className={`text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-10 transition-colors duration-700 text-foreground`}>
+                <h2 className={`text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-10 transition-colors duration-300 text-foreground`}>
                     Forge <span className="text-transparent bg-clip-text bg-linear-to-br from-primary via-primary to-primary/60 drop-shadow-sm">Toasts.</span>
                 </h2>
 
-                <p className={`text-lg md:text-xl max-w-2xl mb-16 font-medium leading-relaxed transition-colors duration-700 text-muted-foreground`}>
+                <p className={`text-lg md:text-xl max-w-2xl mb-16 font-medium leading-relaxed transition-colors duration-300 text-muted-foreground`}>
                     Design professional-grade notification systems with custom easing,
                     motion polish, and synthesized audio signatures.
                 </p>
@@ -183,8 +180,9 @@ export const PreviewSection: React.FC = () => {
   }
   
   .sonner-toast-custom [data-close-button]:hover {
-    background: var(--toast-fg);
-    color: var(--toast-bg);
+    color: var(--toast-bg) ;
+    border-color: var(--loader-color) !important;
+    color: var(--loader-color) !important;
   }
   
   .has-loader::after {
