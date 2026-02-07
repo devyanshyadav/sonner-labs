@@ -57,7 +57,6 @@ export function useToastForge() {
         loaderVariant: 'solid',
         toastSize: 'md',
         duration: 4000,
-        animationDuration: 400,
         offset: 32,
         gap: 12,
         shadowIntensity: 0.2,

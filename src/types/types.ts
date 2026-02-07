@@ -26,7 +26,6 @@ export interface ToastConfig {
     loaderVariant: 'solid' | 'gradient';
     toastSize: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
     duration: number;
-    animationDuration: number;
     offset: number;
     gap: number;
     shadowIntensity: number;

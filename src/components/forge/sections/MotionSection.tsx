@@ -42,20 +42,6 @@ export const MotionSection: React.FC = () => {
                     <div className="py-6 space-y-8">
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
-                                <Label className="text-sm font-medium text-foreground">Animation Duration</Label>
-                                <span className="text-xs font-mono text-muted-foreground">{config.animationDuration}ms</span>
-                            </div>
-                            <Slider
-                                min={100}
-                                max={1000}
-                                step={50}
-                                value={[config.animationDuration]}
-                                onValueChange={([val]) => setConfig(c => ({ ...c, animationDuration: val }))}
-                            />
-                        </div>
-
-                        <div className="space-y-4">
-                            <div className="flex justify-between items-center">
                                 <Label className="text-sm font-medium text-foreground">Toast Duration</Label>
                                 <span className="text-xs font-mono text-muted-foreground">{config.duration / 1000}s</span>
                             </div>
