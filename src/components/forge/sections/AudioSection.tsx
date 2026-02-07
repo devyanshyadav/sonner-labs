@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Music, Volume2, VolumeX, Activity } from 'lucide-react';
 import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { BsSoundwave } from 'react-icons/bs';
 
 export const AudioSection: React.FC = () => {
     const {
@@ -24,7 +25,7 @@ export const AudioSection: React.FC = () => {
                 <div className="mb-6">
                     <Card>
                         <CardContent>
-                            <div className="py-4 flex items-center justify-between">
+                            <div className=" flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <Music className="w-4 h-4 text-primary" />
                                     <span className="text-sm font-medium text-foreground">Toast Sounds</span>
@@ -69,7 +70,7 @@ export const AudioSection: React.FC = () => {
                             >
                                 <span className="flex items-center justify-between w-full">
                                     <span className="text-xs font-semibold capitalize tracking-tight">{preset}</span>
-                                    <Activity className={`w-4 h-4 transition-opacity ${config.soundPreset === preset ? 'opacity-100' : 'opacity-0'}`} />
+                                    <BsSoundwave className={`w-4 h-4 transition-opacity ${config.soundPreset === preset ? 'opacity-100' : 'opacity-0'}`} />
                                 </span>
                             </Button>
                         ))}

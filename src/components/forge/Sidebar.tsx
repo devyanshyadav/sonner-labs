@@ -23,8 +23,12 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { HiOutlineColorSwatch } from "react-icons/hi";
+import { GrView } from 'react-icons/gr';
+import { IoShapesOutline } from 'react-icons/io5';
+import { MdOutlineAnimation } from 'react-icons/md';
 
-export const Sidebar: React.FC = () => {
+export const Sidebar = () => {
     const {
         activeTab,
         setActiveTab,
@@ -32,39 +36,30 @@ export const Sidebar: React.FC = () => {
     } = useToastForgeContext();
 
     const tabs = [
-        { id: 'themes', icon: Palette, label: 'Themes' },
-        { id: 'appearance', icon: Eye, label: 'Look' },
-        { id: 'icon', icon: Ghost, label: 'Icons' },
+        { id: 'themes', icon: HiOutlineColorSwatch, label: 'Themes' },
+        { id: 'appearance', icon: GrView, label: 'Look' },
+        { id: 'icon', icon: IoShapesOutline, label: 'Icons' },
         { id: 'audio', icon: Music, label: 'Audio' },
-        { id: 'motion', icon: Activity, label: 'Motion' },
-        { id: 'code', icon: CodeIcon, label: 'Code' }
+        { id: 'motion', icon: MdOutlineAnimation, label: 'Motion' },
     ];
 
     return (
-        <aside className="w-full md:w-[520px] border-b md:border-b-0 md:border-r border-border bg-card flex flex-col z-30 h-screen overflow-hidden">
+        <aside className="w-full md:w-[520px] border-b md:border-b-0 md:border-r border-border bg-card flex flex-col z-30 h-full overflow-hidden">
             <header className="p-6 border-b border-border flex items-center justify-between bg-muted">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-foreground text-background rounded-full flex items-center justify-center font-black italic transition-transform hover:scale-105 active:scale-95 cursor-default">
-                        TF
+                        SL
                     </div>
                     <div>
-                        <h1 className="text-lg font-black tracking-tight text-foreground leading-tight uppercase">ToastForge</h1>
-                        <p className="text-xs text-muted-foreground uppercase tracking-widest font-black opacity-70 scale-90 origin-left">Notification Studio</p>
+                        <h1 className="text-lg font-black tracking-tight text-foreground leading-tight uppercase">Sonner Labs</h1>
+                        <p className="text-xs text-muted-foreground uppercase tracking-widest font-black opacity-70 scale-90 origin-left">By Devvarena</p>
                     </div>
-                </div>
-                <div className="flex flex-col items-end gap-1">
-                    <Badge variant="outline">
-                        <span className="inline-flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider leading-none">Live</span>
-                        </span>
-                    </Badge>
                 </div>
             </header>
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
-                <div className="px-6 py-4 border-b border-border bg-background">
-                    <TabsList className="w-full">
+                <div className=" p-2 py-3 border-b border-border bg-background">
+                    <TabsList className="w-full bg-transparent">
                         {tabs.map(tab => (
                             <TabsTrigger
                                 key={tab.id}
@@ -122,13 +117,11 @@ export const Sidebar: React.FC = () => {
             </Tabs>
 
             <footer className="p-6 border-t border-border bg-card">
-                <Button onClick={() => triggerToast('default')} size="lg" asChild>
-                    <button className="w-full">
-                        <span className="flex items-center gap-2">
-                            Run Preview
-                            <ChevronRight className="w-4 h-4" />
-                        </span>
-                    </button>
+                <Button onClick={() => triggerToast('default')} size="lg" className='w-full h-11'>
+                    <span className="flex items-center gap-2">
+                        Run Preview
+                        <ChevronRight className="w-4 h-4" />
+                    </span>
                 </Button>
             </footer>
         </aside>

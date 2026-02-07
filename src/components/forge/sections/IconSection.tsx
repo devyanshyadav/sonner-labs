@@ -29,10 +29,8 @@ export const IconSection: React.FC = () => {
                         onClick={() => setEditingIconState(state)}
                         size="lg"
                     >
-                        <span className="flex flex-col items-center gap-2">
-                            <span className="text-[10px] font-semibold uppercase tracking-tighter">{state}</span>
-                            <span className="scale-75 h-5 flex items-center justify-center">{getIconForState(state)}</span>
-                        </span>
+                        <span className="text-[10px] font-semibold uppercase tracking-tighter">{state}</span>
+                        <span className="scale-75 h-5 flex items-center justify-center">{getIconForState(state)}</span>
                     </Button>
                 ))}
             </div>
@@ -54,7 +52,7 @@ export const IconSection: React.FC = () => {
                         </div>
 
                         {config.iconConfigs[editingIconState].mode === 'preset' && (
-                            <div className="grid grid-cols-4 gap-2 h-40 overflow-y-auto custom-scrollbar pr-2 bg-secondary rounded-lg p-2 border border-border">
+                            <div className="grid grid-cols-6 place-items-center gap-2 h-40 overflow-y-auto custom-scrollbar pr-2 bg-secondary rounded-lg p-2 border border-border">
                                 {Object.entries(ICON_PRESETS).map(([name, IconComp]) => (
                                     <Button
                                         key={name}
