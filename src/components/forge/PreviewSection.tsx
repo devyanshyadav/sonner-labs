@@ -36,29 +36,23 @@ export const PreviewSection: React.FC = () => {
     } = useToastForgeContext();
     return (
         <main className={`flex-1 flex flex-col relative overflow-hidden bg-background`}>
-            {/* Background Orbs */}
-            <div className={`absolute inset-0 pointer-events-none opacity-5`}>
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary blur-[180px] rounded-full animate-pulse" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary blur-[180px] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+            {/* Professional Background Layer */}
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(var(--primary-rgb),0.05)_0%,transparent_50%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(var(--background-rgb),1))]" />
             </div>
 
-            <header className="p-8 flex items-center justify-between z-20">
-                <div className="flex gap-4">
-                    <Badge variant="secondary">
-                        <Activity className="w-4 h-4 text-primary" />
-                        {config.theme.name}
+            <header className="p-6 flex items-center justify-between z-20 bg-background/50 backdrop-blur-xl">
+                <div className="flex items-center gap-4">
+                    <Badge variant="outline" className="rounded-md ring-2 ring-muted/50 text-xs font-bold tracking-wider uppercase text-muted-foreground bg-muted/50 border-border">
+                        Current Theme: {config.theme.name}
                     </Badge>
-
-
-
                 </div>
-                <div className='flex items-center gap-2'>
-
-
+                <div className='flex items-center gap-3'>
                     <ThemeToggle />
-
+                    <div className="w-px h-6 bg-border" />
                     <Button
-                        variant="outline"
+                        variant="ghost"
                         size="icon"
                         asChild
                     >
@@ -69,44 +63,45 @@ export const PreviewSection: React.FC = () => {
                 </div>
             </header>
 
-            <div className="flex-1 flex flex-col items-center justify-center p-8 md:p-24 z-20 text-center relative max-w-5xl mx-auto">
-                <div className="mb-6">
-                    <Badge variant="secondary">
-                        <span className="w-1.5 h-1.5 bg-primary/40 rounded-full animate-ping" />
-                        Interactive Playground
-                    </Badge>
+            <div className="flex-1 flex flex-col p-8 md:p-24 z-20 text-center relative max-w-5xl mx-auto">
+                <div className="mb-8">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md ring-2 ring-muted/50 border border-border bg-muted/50 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground animate-in fade-in slide-in-from-bottom-2 duration-500">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                        Production Environment
+                    </div>
                 </div>
 
-                <h2 className={`text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-10 transition-colors duration-300 text-foreground`}>
-                    Forge <span className="text-transparent bg-clip-text bg-linear-to-br from-primary via-primary to-primary/60 drop-shadow-sm">Toasts.</span>
+                <h2 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 text-foreground">
+                    Sonner <span className="text-muted-foreground/40 font-medium">Labs.</span>
                 </h2>
 
-                <p className={`text-lg md:text-xl max-w-2xl mb-16 font-medium leading-relaxed transition-colors duration-300 text-muted-foreground`}>
-                    Design professional-grade notification systems with custom easing,
-                    motion polish, and synthesized audio signatures.
+                <p className="text-base md:text-lg max-w-xl mb-12 text-muted-foreground font-medium leading-relaxed balance">
+                    A professional-grade playground for configuring and previewing
+                    Sonner notification systems. Minimal, precise, and production-ready.
                 </p>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl px-4">
                     {[
-                        { id: 'success', label: 'Confirm', icon: CheckCircle2, color: 'text-chart-2' },
-                        { id: 'error', label: 'Refuse', icon: X, color: 'text-destructive' },
-                        { id: 'warning', label: 'Alert', icon: AlertTriangle, color: 'text-chart-4' },
-                        { id: 'loading', label: 'Process', icon: RefreshCw, color: 'text-primary', spin: true }
+                        { id: 'success', label: 'Success', icon: CheckCircle2, color: 'text-emerald-500' },
+                        { id: 'error', label: 'Error', icon: X, color: 'text-rose-500' },
+                        { id: 'warning', label: 'Warning', icon: AlertTriangle, color: 'text-amber-500' },
+                        { id: 'loading', label: 'Loading', icon: RefreshCw, color: 'text-primary', spin: true }
                     ].map((btn) => (
-                        <Button
+                        <button
                             key={btn.id}
-                            variant="outline"
-                            size="lg"
                             onClick={() => triggerToast(btn.id as ToastType)}
-                            className="w-full"
+                            className=" flex flex-col items-center justify-center border rounded-lg ring-4 ring-muted/50 aspect-square gap-2 bg-card group"
                         >
-                            <span className="flex items-center gap-2">
-                                <btn.icon className={`w-5 h-5 ${btn.color} ${btn.spin ? 'animate-spin' : ''}`} />
+                            <div className="p-3 rounded-lg  group-hover:border-primary/20 group-hover:scale-110 transition-all duration-300">
+                                <btn.icon className={`size-6 ${btn.color} ${btn.spin ? 'animate-spin' : ''}`} />
+                            </div>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground group-hover:text-foreground">
                                 {btn.label}
                             </span>
-                        </Button>
+                        </button>
                     ))}
                 </div>
+
             </div>
 
             <Toaster
@@ -197,8 +192,8 @@ export const PreviewSection: React.FC = () => {
                     : `var(--loader-color)`} !important;
     transform-origin: left !important;
     animation: toast-loader var(--duration) linear forwards;
-    box-shadow: 0 0 10px var(--loader-color);
-    opacity: 0.8;
+    box-shadow: 0 0 12px 1px var(--loader-color);
+    opacity: 0.9;
   }
   
   [data-sonner-toaster]:hover .sonner-toast-custom::after {
