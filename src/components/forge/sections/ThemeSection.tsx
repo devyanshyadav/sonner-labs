@@ -9,14 +9,38 @@ import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
 
 export const ThemeSection: React.FC = () => {
     const { config, setConfig } = useToastForgeContext();
+
+    const getThemeColor = (css: string, variable: string, mode: 'light' | 'dark') => {
+        const blockRegex = mode === 'dark' ? /\.dark\s*{([^}]*)}/ : /:root\s*{([^}]*)}/;
+        const blockMatch = css.match(blockRegex);
+
+        // If mode is dark and block not found, or var not found in dark block, try root
+        if (mode === 'dark' && blockMatch) {
+            const content = blockMatch[1];
+            const varRegex = new RegExp(`${variable}:\\s*([^;]+)`);
+            const varMatch = content.match(varRegex);
+            if (varMatch) return varMatch[1].trim();
+        }
+
+        // Fallback to root block
+        const rootMatch = css.match(/:root\s*{([^}]*)}/);
+        if (rootMatch) {
+            const content = rootMatch[1];
+            const varRegex = new RegExp(`${variable}:\\s*([^;]+)`);
+            const varMatch = content.match(varRegex);
+            return varMatch ? varMatch[1].trim() : '#000000';
+        }
+
+        return '#000000';
+    };
+
     return (
         <div className="grid grid-cols-1 gap-3 animate-in fade-in slide-in-from-bottom-4 duration-300">
             {THEMES.map((t) => (
                 <div key={t.id} className="overflow-hidden">
                     {(() => {
-                        const previewColors = config.previewMode === 'dark'
-                            ? t.dark || t.colors
-                            : t.light || t.colors;
+                        const bg = getThemeColor(t.customCss, '--slb-bg', config.previewMode);
+                        const primary = getThemeColor(t.customCss, '--slb-primary', config.previewMode);
 
                         return (
                             <Card className='p-0.5 bg-card shadow-none'>
@@ -25,16 +49,12 @@ export const ThemeSection: React.FC = () => {
                                     onClick={() => setConfig(prev => ({ ...prev, theme: t }))}
                                 >
                                     <span className="flex items-center gap-4 w-full text-left">
-                                        <span className="w-10 h-10 rounded-lg shrink-0 border border-border overflow-hidden relative" style={{ background: previewColors.background }}>
-                                            <span className="absolute inset-x-0 bottom-0 h-1.5 group-hover/theme:h-4 transition-all duration-300" style={{ background: previewColors.icon }} />
-                                            {/* Visual indicator for dual mode support */}
-                                            {t.light && t.dark && (
-                                                <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-primary/20 border border-primary/30" title="Supports Light & Dark" />
-                                            )}
+                                        <span className="w-10 h-10 rounded-lg shrink-0 border border-border overflow-hidden relative" style={{ background: bg }}>
+                                            <span className="absolute inset-x-0 bottom-0 h-1.5 group-hover/theme:h-4 transition-all duration-300" style={{ background: primary }} />
                                         </span>
                                         <span className="flex-1 min-w-0">
                                             <span className="font-semibold text-sm tracking-tight block">{t.name}</span>
-                                            <span className="text-xs line-clamp-1 opacity-70 italic">{t.vibe}</span>
+                                            <span className="text-xs line-clamp-1 opacity-70 italic">{t.description}</span>
                                         </span>
                                     </span>
                                 </button>

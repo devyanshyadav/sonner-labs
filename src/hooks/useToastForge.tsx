@@ -3,7 +3,7 @@ import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useTheme } from 'next-themes';
 import { ToastConfig, ToastType, StateIconConfig, SoundPreset, ToastTheme } from '@/types/types';
-import { THEMES } from '@/constants/constants';
+import { THEMES, TOAST_SIZES, ensureImportant } from '@/constants/constants';
 import {
     CheckCircle2,
     ShieldCheck,
@@ -21,10 +21,11 @@ import {
     Terminal,
     RefreshCw,
     Sparkles,
-    Loader2
+    Loader2,
+    LucideIcon
 } from 'lucide-react';
 
-export const ICON_PRESETS: Record<string, any> = {
+export const ICON_PRESETS: Record<string, LucideIcon> = {
     check: CheckCircle2,
     shield: ShieldCheck,
     info: Info,
@@ -88,31 +89,14 @@ export function useToastForge() {
         }
     }, [resolvedTheme]);
 
-    // Sync theme colors when previewMode or selected theme changes
-    useEffect(() => {
-        const selectedTheme = THEMES.find(t => t.id === config.theme.id);
-        if (!selectedTheme) return;
-
-        const modeColors = config.previewMode === 'dark'
-            ? selectedTheme.dark || selectedTheme.colors
-            : selectedTheme.light || selectedTheme.colors;
-
-        setConfig(prev => ({
-            ...prev,
-            theme: {
-                ...prev.theme,
-                colors: modeColors
-            }
-        }));
-    }, [config.previewMode, config.theme.id]);
-
     const [editingIconState, setEditingIconState] = useState<ToastType>('success');
     const audioCtxRef = useRef<AudioContext | null>(null);
 
     const initAudio = useCallback(() => {
         if (typeof window === 'undefined') return;
         if (!audioCtxRef.current) {
-            audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+            const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+            audioCtxRef.current = new AudioContextClass();
         }
         if (audioCtxRef.current.state === 'suspended') {
             audioCtxRef.current.resume();
@@ -164,10 +148,6 @@ export function useToastForge() {
         }
     }, [config.soundVolume, initAudio]);
 
-    const updateColor = useCallback((key: keyof ToastTheme['colors'], value: string) => {
-        setConfig(prev => ({ ...prev, theme: { ...prev.theme, colors: { ...prev.theme.colors, [key]: value } } }));
-    }, []);
-
     const updateIconConfig = useCallback((type: ToastType, updates: Partial<StateIconConfig>) => {
         setConfig(prev => ({ ...prev, iconConfigs: { ...prev.iconConfigs, [type]: { ...prev.iconConfigs[type], ...updates } } }));
     }, []);
@@ -207,37 +187,38 @@ export function useToastForge() {
     }, [config.soundEnabled, config.soundPreset, playSynthesizedSound]);
 
     const exportCode = useMemo(() => {
-        const { position, expand, duration, theme, offset, gap, animationDuration, shadowIntensity, blurIntensity, useDynamicVariables, iconSize, iconConfigs, soundEnabled, soundPreset, soundVolume, toastSize, loaderPosition, loaderVariant } = config;
+        const {
+            position, expand, duration, offset, gap, shadowIntensity, blurIntensity,
+            iconSize, iconConfigs, toastSize, loaderPosition, loaderVariant, showProgressBar, previewMode, theme
+        } = config;
 
         const generateIconString = (type: ToastType) => {
             const cfg = iconConfigs[type];
             if (cfg.mode === 'none') return 'null';
-            if (cfg.mode === 'custom') return `<div dangerouslySetInnerHTML={{ __html: \`${cfg.customSvg}\` }} />`;
-            const isSpin = type === 'loading' || cfg.preset === 'refresh';
-            return `<YourIcon size={${iconSize}}${isSpin ? ' className="animate-spin"' : ''} />`;
+            if (cfg.mode === 'custom') {
+                return `(
+          <div 
+            style={{ width: ${iconSize}, height: ${iconSize} }} 
+            className="flex items-center justify-center${type === 'loading' ? ' animate-spin' : ''}"
+            dangerouslySetInnerHTML={{ __html: \`${cfg.customSvg}\` }} 
+          />
+        )`;
+            }
+            const IconName = cfg.preset.charAt(0).toUpperCase() + cfg.preset.slice(1);
+            return `<${IconName} size={${iconSize}} ${type === 'loading' ? 'className="animate-spin" ' : ''}/>`;
         };
 
-        const sizePaddingMap = {
-            sm: '12px 16px',
-            md: '16px 20px',
-            lg: '20px 24px',
-            xl: '28px 32px',
-            '2xl': '36px 44px'
-        };
+        const lucideIcons = Object.values(iconConfigs)
+            .filter(cfg => cfg.mode === 'preset')
+            .map(cfg => cfg.preset.charAt(0).toUpperCase() + cfg.preset.slice(1));
 
-        return `// Optimized ToastForge Configuration with Audio Synthesis
-import { Toaster, toast } from 'sonner';
+        const uniqueIcons = Array.from(new Set(lucideIcons));
 
-export default function App() {
-    const notify = () => {
-    ${soundEnabled ? `// Simple audio trigger
-    const audio = new Audio('/sounds/${soundPreset}.mp3');
-    audio.volume = ${soundVolume};
-    audio.play();
-    ` : ''}
-    toast.success('Done!');
-  };
+        const reactCode = `import { Toaster, toast } from 'sonner';
+${uniqueIcons.length > 0 ? `import { ${uniqueIcons.join(', ')} } from 'lucide-react';` : ''}
 
+// 1. Setup the Toaster component (usually in your layout or root)
+export function ToasterSetup() {
   return (
     <Toaster 
       position="${position}"
@@ -245,6 +226,7 @@ export default function App() {
       duration={${duration}}
       offset="${offset}px"
       gap={${gap}}
+      theme="${previewMode}"
       icons={{
         success: ${generateIconString('success')},
         error: ${generateIconString('error')},
@@ -253,25 +235,115 @@ export default function App() {
         loading: ${generateIconString('loading')},
       }}
       toastOptions={{
-        style: {
-          background: ${useDynamicVariables ? "'var(--toast-bg)'" : `'${theme.colors.background}'`},
-          color: ${useDynamicVariables ? "'var(--toast-text)'" : `'${theme.colors.text}'`},
-          border: '${theme.borderWidth} solid ${useDynamicVariables ? 'var(--toast-border)' : theme.colors.border}',
-          borderRadius: '${theme.borderRadius}',
-          boxShadow: '0 10px 30px rgba(0,0,0,${shadowIntensity})',
-          backdropFilter: 'blur(${blurIntensity}px)',
-          '--duration': '${duration}ms',
-          '--anim-speed': '${animationDuration}ms',
-          '--loader-color': '${theme.colors.icon}',
-          '--loader-pos': '${loaderPosition}',
-          '--loader-variant': '${loaderVariant}',
-          padding: '${sizePaddingMap[toastSize]}',
-        }
+        className: 'sonnerLB-toast-shell ${showProgressBar ? 'sonnerLB-has-loader' : ''}',
       }}
     />
   );
-}`;
+}
+
+// 2. Trigger the toast anywhere in your app
+const notify = () => {
+  toast.success('Action Confirmed', {
+    description: 'Synchronized visual and auditory feedback.',
+  });
+};`;
+
+        const cssCode = `/* Add this to your global CSS file */
+${ensureImportant(theme.customCss)}`;
+
+        return { react: reactCode, css: cssCode };
     }, [config]);
+
+    const getCssVar = useCallback((variable: string) => {
+        const mode = config.previewMode;
+        const css = config.theme.customCss;
+        const blockRegex = mode === 'dark' ? /\.dark\s*{([^}]*)}/ : /:root\s*{([^}]*)}/;
+        const blockMatch = css.match(blockRegex);
+        if (blockMatch) {
+            const varRegex = new RegExp(`${variable}:\\s*([^;]+)`);
+            const varMatch = blockMatch[1].match(varRegex);
+            if (varMatch) return varMatch[1].trim();
+        }
+        const rootMatch = css.match(/:root\s*{([^}]*)}/);
+        if (rootMatch) {
+            const varRegex = new RegExp(`${variable}:\\s*([^;]+)`);
+            const varMatch = rootMatch[1].match(varRegex);
+            if (varMatch) return varMatch[1].trim();
+        }
+        return '';
+    }, [config.previewMode, config.theme.customCss]);
+
+    const updateCssVars = useCallback((variables: Record<string, string>) => {
+        const mode = config.previewMode;
+
+        setConfig(prev => {
+            let newCss = prev.theme.customCss;
+
+            // Function to update a single block
+            const updateBlock = (block: string, vars: Record<string, string>, isRoot: boolean) => {
+                let updatedBlock = block;
+                Object.entries(vars).forEach(([variable, value]) => {
+                    const isGlobal = !['--slb-bg', '--slb-border', '--slb-fg', '--slb-muted', '--slb-primary'].includes(variable);
+
+                    // Only apply if it's a global var going into root, or if we are in the correct block for the current mode
+                    const shouldUpdate = isGlobal || (isRoot ? mode === 'light' : mode === 'dark');
+
+                    if (shouldUpdate) {
+                        if (updatedBlock.includes(variable)) {
+                            const regex = new RegExp(`(${variable}:\\s*)([^;]+)`);
+                            updatedBlock = updatedBlock.replace(regex, `$1${value}`);
+                        } else {
+                            updatedBlock = updatedBlock.replace('}', `  ${variable}: ${value};\n}`);
+                        }
+                    }
+                });
+                return updatedBlock;
+            };
+
+            // Update :root block
+            newCss = newCss.replace(/:root\s*{[^}]*}/, (block) => updateBlock(block, variables, true));
+
+            // Update .dark block if it exists
+            if (newCss.includes('.dark')) {
+                newCss = newCss.replace(/\.dark\s*{[^}]*}/, (block) => updateBlock(block, variables, false));
+            }
+
+            return {
+                ...prev,
+                theme: { ...prev.theme, customCss: newCss }
+            };
+        });
+    }, [config.previewMode]);
+
+    // Automatic CSS synchronization for config fields
+    useEffect(() => {
+        const size = TOAST_SIZES[config.toastSize];
+        const loaderBg = config.loaderVariant === 'gradient'
+            ? `linear-gradient(to right, color-mix(in srgb, var(--slb-primary), transparent 80%), var(--slb-primary))`
+            : `var(--slb-primary)`;
+        const loaderInset = config.loaderPosition === 'top' ? '0 0 auto 0' : 'auto 0 0 0';
+
+        updateCssVars({
+            '--slb-duration': `${config.duration}ms`,
+            '--slb-gap': `${config.gap}px`,
+            '--slb-offset': `${config.offset}px`,
+            '--slb-loader-inset': loaderInset,
+            '--slb-loader-bg': loaderBg,
+            '--slb-width': size.width,
+            '--slb-padding': size.padding,
+            '--slb-font-size': size.fontSize,
+        });
+    }, [
+        config.theme.id,
+        config.duration,
+        config.gap,
+        config.offset,
+        config.loaderPosition,
+        config.loaderVariant,
+        config.toastSize,
+        config.previewMode, // Added to ensure sync on mode toggle
+        updateCssVars
+    ]);
 
     return {
         config,
@@ -280,12 +352,13 @@ export default function App() {
         setActiveTab,
         editingIconState,
         setEditingIconState,
-        updateColor,
         updateIconConfig,
         getIconForState,
         triggerToast,
         exportCode,
         playSynthesizedSound,
-        initAudio
+        initAudio,
+        getCssVar,
+        updateCssVars
     };
 }

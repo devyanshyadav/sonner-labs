@@ -12,7 +12,7 @@ import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
 export const CodeSection: React.FC = () => {
     const { exportCode } = useToastForgeContext();
     const handleCopy = () => {
-        navigator.clipboard.writeText(exportCode);
+        navigator.clipboard.writeText(exportCode.react);
         toast.success('Configuration Copied!', {
             description: 'You can now paste this into your project.',
         });
@@ -27,7 +27,7 @@ export const CodeSection: React.FC = () => {
                             <div className="h-[450px] w-full p-4">
                                 <ScrollArea className="h-full">
                                     <pre className="text-xs font-mono text-muted-foreground whitespace-pre-wrap">
-                                        {exportCode}
+                                        {exportCode.react}
                                     </pre>
                                 </ScrollArea>
                             </div>

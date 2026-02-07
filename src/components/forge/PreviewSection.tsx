@@ -11,21 +11,17 @@ import {
     CheckCircle2,
     X,
     AlertTriangle,
-    RefreshCw
+    RefreshCw,
+    Code as CodeIcon
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
 import { ToastType } from '@/types/types';
 import ThemeToggle from './theme-toggle';
+import { CodeModal } from './CodeModal';
 
-const TOAST_SIZES = {
-    sm: { width: '320px', padding: '12px 16px', fontSize: '13px', iconSize: 18 },
-    md: { width: '380px', padding: '16px 20px', fontSize: '14px', iconSize: 20 },
-    lg: { width: '440px', padding: '20px 24px', fontSize: '16px', iconSize: 22 },
-    xl: { width: '540px', padding: '28px 32px', fontSize: '18px', iconSize: 24 },
-    '2xl': { width: '680px', padding: '36px 44px', fontSize: '20px', iconSize: 28 },
-};
+import { TOAST_SIZES, ensureImportant } from '@/constants/constants';
 
 export const PreviewSection: React.FC = () => {
     const {
@@ -34,6 +30,7 @@ export const PreviewSection: React.FC = () => {
         triggerToast,
         getIconForState
     } = useToastForgeContext();
+    const [isCodeModalOpen, setIsCodeModalOpen] = React.useState(false);
     return (
         <main className={`flex-1 flex flex-col relative overflow-hidden bg-background`}>
             {/* Professional Background Layer */}
@@ -49,6 +46,16 @@ export const PreviewSection: React.FC = () => {
                     </Badge>
                 </div>
                 <div className='flex items-center gap-3'>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setIsCodeModalOpen(true)}
+                        className="gap-2 font-black uppercase tracking-widest text-[10px] hover:bg-muted"
+                    >
+                        <CodeIcon className="w-4 h-4" />
+                        Code
+                    </Button>
+                    <div className="w-px h-6 bg-border" />
                     <ThemeToggle />
                     <div className="w-px h-6 bg-border" />
                     <Button
@@ -120,111 +127,15 @@ export const PreviewSection: React.FC = () => {
                     loading: getIconForState('loading')
                 }}
                 toastOptions={{
-                    style: {
-                        background: config.theme.colors.background,
-                        color: config.theme.colors.text,
-                        border: `${config.theme.borderWidth} solid ${config.theme.colors.border}`,
-                        borderRadius: config.theme.borderRadius,
-                        boxShadow: `0 20px 40px rgba(0,0,0,${config.previewMode === 'dark' ? config.shadowIntensity : config.shadowIntensity * 0.5})`,
-                        backdropFilter: `blur(${config.blurIntensity}px)`,
-                        '--duration': `${config.duration}ms`,
-                        '--loader-color': config.theme.colors.icon,
-                        '--toast-border': config.theme.colors.border,
-                        '--toast-bg': config.theme.colors.background,
-                        '--toast-fg': config.theme.colors.text,
-                        '--toast-muted': config.theme.colors.description,
-                        width: TOAST_SIZES[config.toastSize].width,
-                        padding: TOAST_SIZES[config.toastSize].padding,
-                        fontSize: TOAST_SIZES[config.toastSize].fontSize,
-                    } as React.CSSProperties,
-                    className: `sonner-toast-custom ${config.showProgressBar ? 'has-loader' : ''}`,
+                    className: `sonnerLB-toast-shell ${config.showProgressBar ? 'sonnerLB-has-loader' : ''}`,
                 }}
             />
 
             <style>{`
-  ${config.theme.customCss || ''}
-  
-  .sonner-toast-custom {
-    border-left-width: ${config.theme.borderWidth};
-    border-left-style: solid;
-    border-left-color: var(--toast-border);
-    overflow: hidden !important;
-    height: auto !important;
-    min-height: fit-content !important;
-  }
-  
-  .sonner-toast-custom::before {
-    display: none !important;
-  }
-  
-  .sonner-toast-custom [data-close-button] {
-    background: var(--toast-bg);
-    border: 1px solid var(--toast-border);
-    color: var(--toast-fg);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    top: 12px !important;
-    right: 12px !important;
-    left: auto !important;
-    transform: none !important;
-    opacity: 0;
-    transition: all 0.2s ease;
-  }
-  
-  .sonner-toast-custom:hover [data-close-button] {
-    opacity: 1;
-  }
-  
-  .sonner-toast-custom [data-close-button]:hover {
-    color: var(--toast-bg) ;
-    border-color: var(--loader-color) !important;
-    color: var(--loader-color) !important;
-  }
-  
-  .has-loader::after {
-    content: '';
-    position: absolute;
-    ${config.loaderPosition === 'top' ? 'top: 0 !important;' : 'bottom: 0 !important;'}
-    left: 0 !important;
-    height: 3px !important;
-    width: 100% !important;
-    background: ${config.loaderVariant === 'gradient'
-                    ? `linear-gradient(to right, transparent, var(--loader-color))`
-                    : `var(--loader-color)`} !important;
-    transform-origin: left !important;
-    animation: toast-loader var(--duration) linear forwards;
-    box-shadow: 0 0 12px 1px var(--loader-color);
-    opacity: 0.9;
-  }
-  
-  [data-sonner-toaster]:hover .sonner-toast-custom::after {
-    animation-play-state: paused !important;
-  }
-  
-  @keyframes toast-loader {
-    from {
-      transform: scaleX(1);
-    }
-    to {
-      transform: scaleX(0);
-    }
-  }
-  
-  .sonner-toast-custom [data-description] {
-    color: ${config.theme.colors.description} !important;
-    font-size: 0.875rem;
-    margin-top: 4px;
-    font-weight: 500;
-  }
-  
-  .sonner-toast-custom [data-icon] {
-    color: ${config.theme.colors.icon} !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
+  ${ensureImportant(config.theme.customCss)}
 `}</style>
 
+            <CodeModal open={isCodeModalOpen} onOpenChange={setIsCodeModalOpen} />
         </main>
     );
 };
