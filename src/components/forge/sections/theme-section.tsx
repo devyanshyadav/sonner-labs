@@ -5,10 +5,10 @@ import React from 'react';
 import { THEMES } from '@/constants/toast-presets';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 
 export const ThemeSection: React.FC = () => {
-    const { config, setConfig, playInteractionSound } = useToastForgeContext();
+    const { config, setConfig, playInteractionSound } = useSonnerLabsContext();
 
     const getThemeColor = (css: string, variable: string, mode: 'light' | 'dark') => {
         const blockRegex = mode === 'dark' ? /\.dark\s*{([^}]*)}/ : /:root\s*{([^}]*)}/;

@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 import { ToastType } from '@/types/toast-types';
 import ThemeToggle from './theme-toggle';
 import { CodeModal } from './code-modal';
@@ -29,7 +29,7 @@ export const PreviewSection: React.FC = () => {
         setConfig,
         triggerToast,
         getIconForState
-    } = useToastForgeContext();
+    } = useSonnerLabsContext();
     const [isCodeModalOpen, setIsCodeModalOpen] = React.useState(false);
     return (
         <main className={`flex-1 flex flex-col relative overflow-hidden bg-background`}>

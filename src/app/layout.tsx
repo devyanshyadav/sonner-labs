@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ToastForgeProvider } from "@/components/forge/toast-forge-provider";
+import { SonnerLabsProvider } from "@/components/forge/sonner-labs-provider";
 import { ThemeProvider } from "next-themes";
 
 
@@ -62,8 +62,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       > <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ToastForgeProvider>
-            {children}</ToastForgeProvider>
+          <SonnerLabsProvider>
+            {children}</SonnerLabsProvider>
         </ThemeProvider>
       </body>
     </html>

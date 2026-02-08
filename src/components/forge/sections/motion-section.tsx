@@ -8,10 +8,10 @@ import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MoveUp, MoveDown, MoveLeft, MoveRight } from 'lucide-react';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 
 export const MotionSection: React.FC = () => {
-    const { config, setConfig } = useToastForgeContext();
+    const { config, setConfig } = useSonnerLabsContext();
     const positions: ToastPosition[] = [
         'top-left', 'top-center', 'top-right',
         'bottom-left', 'bottom-center', 'bottom-right'

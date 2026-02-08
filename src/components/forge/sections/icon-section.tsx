@@ -3,12 +3,12 @@
 
 import React from 'react';
 import { ToastType, IconMode } from '@/types/toast-types';
-import { ICON_PRESETS } from '@/hooks/use-toast-forge';
+import { ICON_PRESETS } from '@/hooks/use-sonner-labs';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 
 export const IconSection: React.FC = () => {
     const {
@@ -19,7 +19,7 @@ export const IconSection: React.FC = () => {
         updateIconConfig,
         getIconForState,
         playInteractionSound
-    } = useToastForgeContext();
+    } = useSonnerLabsContext();
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
             <div className="grid grid-cols-3 gap-2">

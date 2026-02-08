@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Copy, Check, Code, FileJson, FileCode } from 'lucide-react';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 import { toast } from 'sonner';
 
 interface CodeModalProps {
@@ -22,7 +22,7 @@ interface CodeModalProps {
 }
 
 export const CodeModal: React.FC<CodeModalProps> = ({ open, onOpenChange }) => {
-    const { exportCode, playInteractionSound } = useToastForgeContext();
+    const { exportCode, playInteractionSound } = useSonnerLabsContext();
     const [copied, setCopied] = useState<'react' | 'css' | null>(null);
 
     const handleCopy = (type: 'react' | 'css') => {

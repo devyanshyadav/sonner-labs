@@ -22,7 +22,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 import { HiOutlineColorSwatch } from "react-icons/hi";
 import { GrView } from 'react-icons/gr';
 import { IoShapesOutline } from 'react-icons/io5';
@@ -34,7 +34,7 @@ export const Sidebar = () => {
         activeTab,
         setActiveTab,
         triggerToast
-    } = useToastForgeContext();
+    } = useSonnerLabsContext();
 
     const tabs: { id: string, icon: React.ComponentType<{ className?: string }>, label: string }[] = [
         { id: 'themes', icon: HiOutlineColorSwatch, label: 'Themes' },
@@ -48,7 +48,7 @@ export const Sidebar = () => {
         <aside className="w-full md:w-[520px] border-b md:border-b-0 md:border-r border-border bg-card flex flex-col z-30 h-full overflow-hidden">
             <header className="p-4 border-b border-border flex items-center justify-between bg-muted">
                 <div className="flex items-center gap-3">
-                    <Logo className="p-1.5 w-12 h-12 rounded-full bg-primary text-primary-foreground ring-2 ring-primary/20" />
+                    <Logo className="p-1.5 w-12 h-12 rounded-full bg-black" />
                     <div>
                         <h1 className="text-lg font-black tracking-tight text-foreground leading-tight uppercase">Sonner Labs</h1>
                         <p className="text-xs text-muted-foreground uppercase tracking-widest font-black opacity-70 scale-90 origin-left">By Devvarena</p>

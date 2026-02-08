@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Music, Volume2, VolumeX, Activity } from 'lucide-react';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 import { BsSoundwave } from 'react-icons/bs';
 
 export const AudioSection: React.FC = () => {
@@ -18,7 +18,7 @@ export const AudioSection: React.FC = () => {
         setConfig,
         playSynthesizedSound,
         initAudio
-    } = useToastForgeContext();
+    } = useSonnerLabsContext();
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
             <section>

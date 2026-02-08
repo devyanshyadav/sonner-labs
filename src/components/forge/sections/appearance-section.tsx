@@ -4,12 +4,12 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
-import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
 import { ToastSize } from '@/types/toast-types';
 import { TOAST_SIZES } from '@/constants/toast-presets';
 
 export const AppearanceSection: React.FC = () => {
-    const { config, setConfig, getCssVar, updateCssVars } = useToastForgeContext();
+    const { config, setConfig, getCssVar, updateCssVars } = useSonnerLabsContext();
 
     const colorVars = [
         { label: 'background', var: '--slb-bg' },
