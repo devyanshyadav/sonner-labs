@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sonner Labs 🧊
 
-## Getting Started
+**Sonner Labs** is a professional-grade playground and configurator for [Sonner](https://sonner.emilkowal.ski/), the opinionated toast component for React. It allows developers to visually design, preview, and export perfectly tailored notification systems in seconds.
 
-First, run the development server:
+![Sonner Labs Banner](./public/banner.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Live Demo
+Visit the live tool at: [sonnerlabs.devvarena.com](https://sonnerlabs.devvarena.com)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **🎨 Advanced Theming**: Switch between curated presets or craft your own CSS-based themes.
+- **👁️ Real-time Preview**: See exactly how your toasts will look and behave in a production-like environment.
+- **🛠️ Granular Control**:
+    - **Look & Feel**: Adjust border radius, colors, and toast sizes (sm to 2xl).
+    - **Iconography**: Customize icons for every state (Success, Error, Info, etc.) and toggle icon visibility.
+    - **Motion & Positioning**: Configure toaster position, duration, gap, and screen offset.
+    - **Audio Feedback**: Add auditory cues with pop, success, and error sound presets.
+- **💻 Instant Code Export**: Get ready-to-use React components and CSS snippets for your project.
+- **🌗 Dark Mode**: Optimized for both light and dark interfaces.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Toasts**: [Sonner](https://sonner.emilkowal.ski/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Components**: [Radix UI](https://www.radix-ui.com/) & [Shadcn UI](https://ui.shadcn.com/)
+- **Icons**: [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
+- **Linter/Formatter**: [Biome](https://biomejs.dev/)
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Prerequisites
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Bun](https://bun.sh/) (recommended) or Node.js
 
-## Deploy on Vercel
+### Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/devyanshyadav/sonner-labs.git
+   cd sonner-labs
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Install dependencies:
+   ```bash
+   bun install
+   ```
+
+3. Run the development server:
+   ```bash
+   bun dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+
+## 👤 Author
+
+**Devyansh Yadav**
+- Website: [devyanshyadav](https://devyanshyadav.com)
+- Twitter: [@devyanshyadavv](https://x.com/DevyanshYadavv)
+
+## 📄 License
+
+This project is licensed under the MIT License.
