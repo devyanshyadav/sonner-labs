@@ -77,7 +77,7 @@ export const ensureImportant = (css: string) => {
   }).join('\n\n');
 
   // 4. Restore Keyframes & Comments
-  result = result.replace(/__PLACEHOLDER_(\d+)__/g, (_, id) => placeholders[parseInt(id)]);
+  result = result.replace(/__PLACEHOLDER_(\d+)__/g, (_match: string, id: string) => placeholders[parseInt(id)]);
 
   return result;
 };

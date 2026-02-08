@@ -27,6 +27,7 @@ import { HiOutlineColorSwatch } from "react-icons/hi";
 import { GrView } from 'react-icons/gr';
 import { IoShapesOutline } from 'react-icons/io5';
 import { MdOutlineAnimation } from 'react-icons/md';
+import Logo from './logo';
 
 export const Sidebar = () => {
     const {
@@ -35,7 +36,7 @@ export const Sidebar = () => {
         triggerToast
     } = useToastForgeContext();
 
-    const tabs = [
+    const tabs: { id: string, icon: React.ComponentType<{ className?: string }>, label: string }[] = [
         { id: 'themes', icon: HiOutlineColorSwatch, label: 'Themes' },
         { id: 'appearance', icon: GrView, label: 'Look' },
         { id: 'icon', icon: IoShapesOutline, label: 'Icons' },
@@ -45,11 +46,9 @@ export const Sidebar = () => {
 
     return (
         <aside className="w-full md:w-[520px] border-b md:border-b-0 md:border-r border-border bg-card flex flex-col z-30 h-full overflow-hidden">
-            <header className="p-6 border-b border-border flex items-center justify-between bg-muted">
+            <header className="p-4 border-b border-border flex items-center justify-between bg-muted">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-foreground text-background rounded-full flex items-center justify-center font-black italic transition-transform hover:scale-105 active:scale-95 cursor-default">
-                        SL
-                    </div>
+                    <Logo className="p-1.5 w-12 h-12 rounded-full bg-primary text-primary-foreground ring-2 ring-primary/20" />
                     <div>
                         <h1 className="text-lg font-black tracking-tight text-foreground leading-tight uppercase">Sonner Labs</h1>
                         <p className="text-xs text-muted-foreground uppercase tracking-widest font-black opacity-70 scale-90 origin-left">By Devvarena</p>
@@ -73,9 +72,9 @@ export const Sidebar = () => {
                     </TabsList>
                 </div>
 
-                <div className="flex-1 relative overflow-hidden">
-                    <ScrollArea className="h-full px-6 py-6" scrollHideDelay={200}>
-                        <div className="pb-24">
+                <div className="flex-1 relative overflow-hidden [mask-image:_linear-gradient(to_bottom,_transparent_0,_white_30px,white_calc(100%-30px),_transparent_100%)]">
+                    <ScrollArea className="h-full" scrollHideDelay={200}>
+                        <div className="pb-24 pt-6 px-4">
                             <div className="flex items-center justify-between mb-8 px-2">
                                 <div className="flex items-center gap-3">
                                     <div className="p-2 bg-muted rounded-lg border border-border">

@@ -10,9 +10,10 @@ import { Copy, Code } from 'lucide-react';
 import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
 
 export const CodeSection: React.FC = () => {
-    const { exportCode } = useToastForgeContext();
+    const { exportCode, playInteractionSound } = useToastForgeContext();
     const handleCopy = () => {
         navigator.clipboard.writeText(exportCode.react);
+        playInteractionSound();
         toast.success('Configuration Copied!', {
             description: 'You can now paste this into your project.',
         });

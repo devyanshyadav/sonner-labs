@@ -25,6 +25,12 @@ import {
     LucideIcon
 } from 'lucide-react';
 
+declare global {
+    interface Window {
+        webkitAudioContext: typeof AudioContext;
+    }
+}
+
 export const ICON_PRESETS: Record<string, LucideIcon> = {
     check: CheckCircle2,
     shield: ShieldCheck,
@@ -65,8 +71,8 @@ export function useToastForge() {
         previewMode: 'dark',
         useDynamicVariables: false,
         iconSize: 20,
-        soundEnabled: true,
-        soundPreset: 'success',
+        soundEnabled: false,
+        soundPreset: 'pop',
         soundVolume: 0.5,
         iconConfigs: {
             success: { mode: 'preset', preset: 'check', customSvg: DEFAULT_SVG },
@@ -94,7 +100,7 @@ export function useToastForge() {
     const initAudio = useCallback(() => {
         if (typeof window === 'undefined') return;
         if (!audioCtxRef.current) {
-            const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
             audioCtxRef.current = new AudioContextClass();
         }
         if (audioCtxRef.current.state === 'suspended') {
@@ -147,6 +153,10 @@ export function useToastForge() {
         }
     }, [config.soundVolume, initAudio]);
 
+    const playInteractionSound = useCallback(() => {
+        playSynthesizedSound('pop');
+    }, [playSynthesizedSound]);
+
     const updateIconConfig = useCallback((type: ToastType, updates: Partial<StateIconConfig>) => {
         setConfig(prev => ({ ...prev, iconConfigs: { ...prev.iconConfigs, [type]: { ...prev.iconConfigs[type], ...updates } } }));
     }, []);
@@ -171,7 +181,13 @@ export function useToastForge() {
     }, [config.iconConfigs, config.iconSize]);
 
     const triggerToast = useCallback((type: ToastType) => {
-        if (config.soundEnabled) playSynthesizedSound(config.soundPreset);
+        // App-only logic: Always play feedback in laboratory
+        if (config.soundEnabled) {
+            playSynthesizedSound(config.soundPreset);
+        } else {
+            playSynthesizedSound('pop');
+        }
+
         const options = {
             description: `Synchronized visual and auditory feedback.`,
         };
@@ -185,13 +201,63 @@ export function useToastForge() {
         }
     }, [config.soundEnabled, config.soundPreset, playSynthesizedSound]);
 
+    // Unified Feedback & Auto-Preview Engine
+    const isFirstRender = useRef(true);
+    const lastTriggerRef = useRef<string>('');
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        // Logic to determine what changed and what feedback to give
+        const configString = JSON.stringify({
+            themeId: config.theme.id,
+            pos: config.position,
+            size: config.toastSize,
+            lPos: config.loaderPosition,
+            lVar: config.loaderVariant,
+            exp: config.expand,
+            close: config.closeButton,
+            prog: config.showProgressBar,
+            iMode: config.iconConfigs[editingIconState].mode,
+            iPre: config.iconConfigs[editingIconState].preset,
+            dur: config.duration,
+            gap: config.gap,
+            off: config.offset,
+            iSize: config.iconSize,
+        });
+
+        const timer = setTimeout(() => {
+            // Only trigger if the actual content configuration changed
+            if (configString !== lastTriggerRef.current) {
+                triggerToast(editingIconState);
+                lastTriggerRef.current = configString;
+            } else {
+                // If only tab or non-toast state changed, just play interaction sound
+                playInteractionSound();
+            }
+        }, 200);
+
+        return () => clearTimeout(timer);
+    }, [
+        activeTab,
+        editingIconState,
+        config,
+        playInteractionSound,
+        triggerToast
+    ]);
+
+
     const exportCode = useMemo(() => {
         const {
             position, expand, duration, offset, gap, shadowIntensity, blurIntensity,
-            iconSize, iconConfigs, toastSize, loaderPosition, loaderVariant, showProgressBar, previewMode, theme
+            iconSize, iconConfigs, toastSize, loaderPosition, loaderVariant, showProgressBar,
+            previewMode, theme, soundEnabled, soundVolume
         } = config;
 
-        const generateIconString = (type: ToastType) => {
+        const generateIconString = (type: ToastType): string => {
             const cfg = iconConfigs[type];
             if (cfg.mode === 'none') return 'null';
             if (cfg.mode === 'custom') {
@@ -213,9 +279,82 @@ export function useToastForge() {
 
         const uniqueIcons = Array.from(new Set(lucideIcons));
 
+        const getSoundImplementation = (): string => {
+            const vol = soundVolume;
+            const presets: Record<string, string> = {
+                pop: `
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(600, ctx.currentTime);
+  g.gain.setValueAtTime(0, ctx.currentTime);
+  g.gain.linearRampToValueAtTime(${vol}, ctx.currentTime + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime + 0.1);`,
+                success: `
+  const playTone = (freq: number, start: number, duration: number, v: number): void => {
+    const osc: OscillatorNode = ctx.createOscillator();
+    const g: GainNode = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, start);
+    g.gain.setValueAtTime(0, start);
+    g.gain.linearRampToValueAtTime(v * ${vol}, start + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, start + duration);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(start); osc.stop(start + duration);
+  };
+  playTone(440, ctx.currentTime, 0.2, 0.5);
+  playTone(880, ctx.currentTime + 0.05, 0.3, 0.3);`,
+                error: `
+  const playTone = (freq: number, start: number, duration: number, v: number): void => {
+    const osc: OscillatorNode = ctx.createOscillator();
+    const g: GainNode = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(freq, start);
+    g.gain.setValueAtTime(0, start);
+    g.gain.linearRampToValueAtTime(v * ${vol}, start + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, start + duration);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(start); osc.stop(start + duration);
+  };
+  playTone(150, ctx.currentTime, 0.15, 0.2);
+  playTone(100, ctx.currentTime + 0.1, 0.2, 0.2);`,
+                digital: `
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(1200, ctx.currentTime);
+  g.gain.setValueAtTime(0, ctx.currentTime);
+  g.gain.linearRampToValueAtTime(${vol} * 0.4, ctx.currentTime + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime + 0.05);`,
+                dock: `
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(80, ctx.currentTime);
+  g.gain.setValueAtTime(0, ctx.currentTime);
+  g.gain.linearRampToValueAtTime(${vol}, ctx.currentTime + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime + 0.3);`
+            };
+            return presets[config.soundPreset] || presets.pop;
+        };
+
         const reactCode = `import { Toaster, toast } from 'sonner';
 ${uniqueIcons.length > 0 ? `import { ${uniqueIcons.join(', ')} } from 'lucide-react';` : ''}
 
+${soundEnabled ? `// Interaction Sound Utility (${config.soundPreset} preset)
+const playToastSound = (): void => {
+  if (typeof window === 'undefined') return;
+  const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+  const ctx: AudioContext = new AudioContextClass();
+${getSoundImplementation()}
+};
+` : ''}
 // 1. Setup the Toaster component (usually in your layout or root)
 export function ToasterSetup() {
   return (
@@ -242,7 +381,7 @@ export function ToasterSetup() {
 
 // 2. Trigger the toast anywhere in your app
 const notify = () => {
-  toast.success('Action Confirmed', {
+  ${soundEnabled ? 'playToastSound();\n  ' : ''}toast.success('Action Confirmed', {
     description: 'Synchronized visual and auditory feedback.',
   });
 };`;
@@ -356,6 +495,7 @@ ${ensureImportant(theme.customCss)}`;
         triggerToast,
         exportCode,
         playSynthesizedSound,
+        playInteractionSound,
         initAudio,
         getCssVar,
         updateCssVars

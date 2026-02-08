@@ -19,12 +19,12 @@ const ThemeToggle = () => {
     const toggleTheme = async (e: React.MouseEvent) => {
         const newTheme = isDark ? "light" : "dark";
 
-        if (!(document as any).startViewTransition) {
+        if (!document.startViewTransition) {
             setTheme(newTheme);
             return;
         }
 
-        const transition = (document as any).startViewTransition(async () => {
+        document.startViewTransition(async () => {
             flushSync(() => {
                 setTheme(newTheme);
             });

@@ -22,13 +22,14 @@ interface CodeModalProps {
 }
 
 export const CodeModal: React.FC<CodeModalProps> = ({ open, onOpenChange }) => {
-    const { exportCode } = useToastForgeContext();
+    const { exportCode, playInteractionSound } = useToastForgeContext();
     const [copied, setCopied] = useState<'react' | 'css' | null>(null);
 
     const handleCopy = (type: 'react' | 'css') => {
         const text = type === 'react' ? exportCode.react : exportCode.css;
         navigator.clipboard.writeText(text);
         setCopied(type);
+        playInteractionSound(); // Play app feedback sound
         toast.success(`${type.toUpperCase()} Codeline Copied!`, {
             description: 'Implementation details are in your clipboard.',
         });
