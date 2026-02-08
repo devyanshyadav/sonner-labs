@@ -63,7 +63,7 @@ export const PreviewSection: React.FC = () => {
                         size="icon"
                         asChild
                     >
-                        <a href="https://github.com/emilkowalski/sonner" target="_blank" rel="noreferrer">
+                        <a href="https://github.com/devyanshyadav/sonner-labs" target="_blank" rel="noreferrer">
                             <Github className="w-5 h-5" />
                         </a>
                     </Button>
