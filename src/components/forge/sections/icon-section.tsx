@@ -2,13 +2,13 @@
 "use client";
 
 import React from 'react';
-import { ToastType, IconMode } from '@/types/types';
-import { ICON_PRESETS } from '@/hooks/useToastForge';
+import { ToastType, IconMode } from '@/types/toast-types';
+import { ICON_PRESETS } from '@/hooks/use-toast-forge';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
 
 export const IconSection: React.FC = () => {
     const {
@@ -17,7 +17,8 @@ export const IconSection: React.FC = () => {
         editingIconState,
         setEditingIconState,
         updateIconConfig,
-        getIconForState
+        getIconForState,
+        playInteractionSound
     } = useToastForgeContext();
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
@@ -90,7 +91,7 @@ export const IconSection: React.FC = () => {
                     max={48}
                     step={1}
                     value={[config.iconSize]}
-                    onValueChange={([val]) => setConfig(c => ({ ...c, iconSize: val }))}
+                    onValueChange={(vals: number[]) => setConfig(prev => ({ ...prev, iconSize: vals[0] }))}
                 />
             </div>
         </div>

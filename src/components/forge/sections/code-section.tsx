@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent } from '@/components/ui/card';
 import { Copy, Code } from 'lucide-react';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
 
 export const CodeSection: React.FC = () => {
     const { exportCode, playInteractionSound } = useToastForgeContext();

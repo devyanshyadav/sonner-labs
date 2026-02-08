@@ -2,8 +2,8 @@
 import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useTheme } from 'next-themes';
-import { ToastConfig, ToastType, StateIconConfig, SoundPreset, ToastTheme } from '@/types/types';
-import { THEMES, TOAST_SIZES, ensureImportant } from '@/constants/constants';
+import { ToastConfig, ToastType, StateIconConfig, SoundPreset, ToastTheme } from '@/types/toast-types';
+import { THEMES, TOAST_SIZES, ensureImportant } from '@/constants/toast-presets';
 import {
     CheckCircle2,
     ShieldCheck,

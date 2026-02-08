@@ -1,4 +1,4 @@
-import { ToastTheme } from '@/types/types';
+import { ToastTheme } from '@/types/toast-types';
 
 export const TOAST_SIZES = {
   sm: { width: '320px', padding: '12px 16px', fontSize: '13px', iconSize: 18 },

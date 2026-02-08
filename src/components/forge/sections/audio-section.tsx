@@ -2,14 +2,14 @@
 "use client";
 
 import React from 'react';
-import { SoundPreset } from '@/types/types';
+import { SoundPreset } from '@/types/toast-types';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Music, Volume2, VolumeX, Activity } from 'lucide-react';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
 import { BsSoundwave } from 'react-icons/bs';
 
 export const AudioSection: React.FC = () => {

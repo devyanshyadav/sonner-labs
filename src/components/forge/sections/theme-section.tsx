@@ -2,13 +2,13 @@
 "use client";
 
 import React from 'react';
-import { THEMES } from '@/constants/constants';
+import { THEMES } from '@/constants/toast-presets';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
 
 export const ThemeSection: React.FC = () => {
-    const { config, setConfig } = useToastForgeContext();
+    const { config, setConfig, playInteractionSound } = useToastForgeContext();
 
     const getThemeColor = (css: string, variable: string, mode: 'light' | 'dark') => {
         const blockRegex = mode === 'dark' ? /\.dark\s*{([^}]*)}/ : /:root\s*{([^}]*)}/;

@@ -4,8 +4,9 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
-import { TOAST_SIZES } from '@/constants/constants';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { ToastSize } from '@/types/toast-types';
+import { TOAST_SIZES } from '@/constants/toast-presets';
 
 export const AppearanceSection: React.FC = () => {
     const { config, setConfig, getCssVar, updateCssVars } = useToastForgeContext();
@@ -54,7 +55,7 @@ export const AppearanceSection: React.FC = () => {
                             <Slider
                                 min={0} max={40} step={1}
                                 value={[parseInt(getCssVar('--slb-radius')) || 0]}
-                                onValueChange={([val]) => updateCssVars({ '--slb-radius': `${val}px` })}
+                                onValueChange={(vals: number[]) => updateCssVars({ '--slb-radius': `${vals[0]}px` })}
                             />
                         </div>
 
@@ -62,7 +63,7 @@ export const AppearanceSection: React.FC = () => {
                             <Label className="text-sm font-medium text-foreground">Toast Size</Label>
                             <Tabs
                                 value={config.toastSize}
-                                onValueChange={(val) => setConfig(c => ({ ...c, toastSize: val as typeof config.toastSize }))}
+                                onValueChange={(val: string) => setConfig(prev => ({ ...prev, toastSize: val as ToastSize }))}
                                 className="w-full"
                             >
                                 <TabsList className="grid w-full grid-cols-5 bg-muted/50 p-1 rounded-xl">
@@ -80,7 +81,7 @@ export const AppearanceSection: React.FC = () => {
                                 <Label className="text-sm font-medium text-foreground">Expand Stack</Label>
                                 <Switch
                                     checked={config.expand}
-                                    onCheckedChange={(val) => setConfig(c => ({ ...c, expand: val }))}
+                                    onCheckedChange={(val: boolean) => setConfig(prev => ({ ...prev, expand: val }))}
                                 />
                             </div>
 
@@ -88,7 +89,7 @@ export const AppearanceSection: React.FC = () => {
                                 <Label className="text-sm font-medium text-foreground">Close Button</Label>
                                 <Switch
                                     checked={config.closeButton}
-                                    onCheckedChange={(val) => setConfig(c => ({ ...c, closeButton: val }))}
+                                    onCheckedChange={(val: boolean) => setConfig(c => ({ ...c, closeButton: val }))}
                                 />
                             </div>
                         </div>
@@ -98,7 +99,7 @@ export const AppearanceSection: React.FC = () => {
                                 <Label className="text-sm font-medium text-foreground">Loader Progress</Label>
                                 <Switch
                                     checked={config.showProgressBar}
-                                    onCheckedChange={(val) => setConfig(c => ({ ...c, showProgressBar: val }))}
+                                    onCheckedChange={(val: boolean) => setConfig(c => ({ ...c, showProgressBar: val }))}
                                 />
                             </div>
 

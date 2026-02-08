@@ -16,12 +16,12 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
-import { ToastType } from '@/types/types';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
+import { ToastType } from '@/types/toast-types';
 import ThemeToggle from './theme-toggle';
-import { CodeModal } from './CodeModal';
+import { CodeModal } from './code-modal';
 
-import { TOAST_SIZES, ensureImportant } from '@/constants/constants';
+import { TOAST_SIZES, ensureImportant } from '@/constants/toast-presets';
 
 export const PreviewSection: React.FC = () => {
     const {

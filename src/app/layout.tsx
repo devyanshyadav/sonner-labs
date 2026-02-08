@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ToastForgeProvider } from "@/components/forge/ToastForgeProvider";
+import { ToastForgeProvider } from "@/components/forge/toast-forge-provider";
 import { ThemeProvider } from "next-themes";
 
 

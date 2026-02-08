@@ -1,5 +1,5 @@
-import { Sidebar } from "@/components/forge/Sidebar";
-import { PreviewSection } from "@/components/forge/PreviewSection";
+import { Sidebar } from "@/components/forge/sidebar";
+import { PreviewSection } from "@/components/forge/preview-section";
 
 export default function Page() {
   return (

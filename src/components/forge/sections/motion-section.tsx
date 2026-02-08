@@ -2,13 +2,13 @@
 "use client";
 
 import React from 'react';
-import { ToastPosition } from '@/types/types';
+import { ToastPosition } from '@/types/toast-types';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MoveUp, MoveDown, MoveLeft, MoveRight } from 'lucide-react';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
 
 export const MotionSection: React.FC = () => {
     const { config, setConfig } = useToastForgeContext();
@@ -50,7 +50,7 @@ export const MotionSection: React.FC = () => {
                                 max={10000}
                                 step={500}
                                 value={[config.duration]}
-                                onValueChange={([val]) => setConfig(c => ({ ...c, duration: val }))}
+                                onValueChange={([val]: number[]) => setConfig(c => ({ ...c, duration: val }))}
                             />
                         </div>
 
@@ -64,7 +64,7 @@ export const MotionSection: React.FC = () => {
                                 max={100}
                                 step={1}
                                 value={[config.gap]}
-                                onValueChange={([val]) => setConfig(c => ({ ...c, gap: val }))}
+                                onValueChange={([val]: number[]) => setConfig(c => ({ ...c, gap: val }))}
                             />
                         </div>
 
@@ -78,7 +78,7 @@ export const MotionSection: React.FC = () => {
                                 max={100}
                                 step={4}
                                 value={[config.offset]}
-                                onValueChange={([val]) => setConfig(c => ({ ...c, offset: val }))}
+                                onValueChange={([val]: number[]) => setConfig(c => ({ ...c, offset: val }))}
                             />
                         </div>
                     </div>

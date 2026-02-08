@@ -12,17 +12,17 @@ import {
     ChevronRight,
     Settings2
 } from 'lucide-react';
-import { ThemeSection } from './sections/ThemeSection';
-import { AppearanceSection } from './sections/AppearanceSection';
-import { IconSection } from './sections/IconSection';
-import { AudioSection } from './sections/AudioSection';
-import { MotionSection } from './sections/MotionSection';
-import { CodeSection } from './sections/CodeSection';
+import { ThemeSection } from './sections/theme-section';
+import { AppearanceSection } from './sections/appearance-section';
+import { IconSection } from './sections/icon-section';
+import { AudioSection } from './sections/audio-section';
+import { MotionSection } from './sections/motion-section';
+import { CodeSection } from './sections/code-section';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useToastForgeContext } from '@/components/forge/ToastForgeProvider';
+import { useToastForgeContext } from '@/components/forge/toast-forge-provider';
 import { HiOutlineColorSwatch } from "react-icons/hi";
 import { GrView } from 'react-icons/gr';
 import { IoShapesOutline } from 'react-icons/io5';

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext } from "react";
-import { useToastForge } from "@/hooks/useToastForge";
+import { useToastForge } from "@/hooks/use-toast-forge";
 
 type ToastForgeContextValue = ReturnType<typeof useToastForge>;
 
