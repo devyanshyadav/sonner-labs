@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Music, Volume2, VolumeX, Activity } from 'lucide-react';
-import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
+import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
 import { BsSoundwave } from 'react-icons/bs';
 
 export const AudioSection: React.FC = () => {

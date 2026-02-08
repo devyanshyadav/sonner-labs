@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card, CardContent } from '@/components/ui/card';
 import { Copy, Code } from 'lucide-react';
-import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
+import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
 
 export const CodeSection: React.FC = () => {
     const { exportCode, playInteractionSound } = useSonnerLabsContext();

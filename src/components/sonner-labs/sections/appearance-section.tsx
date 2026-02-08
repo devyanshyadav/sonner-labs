@@ -4,7 +4,7 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
-import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
+import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
 import { ToastSize } from '@/types/toast-types';
 import { TOAST_SIZES } from '@/constants/toast-presets';
 

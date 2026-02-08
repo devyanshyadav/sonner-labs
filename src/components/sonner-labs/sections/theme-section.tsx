@@ -5,7 +5,7 @@ import React from 'react';
 import { THEMES } from '@/constants/toast-presets';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
+import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
 
 export const ThemeSection: React.FC = () => {
     const { config, setConfig, playInteractionSound } = useSonnerLabsContext();

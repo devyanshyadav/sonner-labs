@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
+import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
 import { ToastType } from '@/types/toast-types';
 import ThemeToggle from './theme-toggle';
 import { CodeModal } from './code-modal';

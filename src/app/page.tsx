@@ -1,5 +1,5 @@
-import { Sidebar } from "@/components/forge/sidebar";
-import { PreviewSection } from "@/components/forge/preview-section";
+import { Sidebar } from "@/components/sonner-labs/sidebar";
+import { PreviewSection } from "@/components/sonner-labs/preview-section";
 
 export default function Page() {
   return (

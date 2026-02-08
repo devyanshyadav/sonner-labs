@@ -8,7 +8,7 @@ import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MoveUp, MoveDown, MoveLeft, MoveRight } from 'lucide-react';
-import { useSonnerLabsContext } from '@/components/forge/sonner-labs-provider';
+import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
 
 export const MotionSection: React.FC = () => {
     const { config, setConfig } = useSonnerLabsContext();

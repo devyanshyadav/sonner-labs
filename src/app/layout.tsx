@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SonnerLabsProvider } from "@/components/forge/sonner-labs-provider";
+import { SonnerLabsProvider } from "@/components/sonner-labs/sonner-labs-provider";
 import { ThemeProvider } from "next-themes";
 
 
