@@ -124,7 +124,7 @@ const DEFAULT_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"
 export function useSonnerLabs() {
     const [config, setConfig] = useState<ToastConfig>({
         position: 'bottom-right',
-        expand: true,
+        expand: false,
         closeButton: true,
         showProgressBar: true,
         loaderPosition: 'bottom',
