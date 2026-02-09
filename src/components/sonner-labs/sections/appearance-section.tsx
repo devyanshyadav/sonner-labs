@@ -44,7 +44,7 @@ export const AppearanceSection: React.FC = () => {
                 </div>
             </section>
 
-            <Card className="border-none bg-muted/30 shadow-none">
+            <Card className='shadow-none bg-muted/20'>
                 <CardContent className="p-6 space-y-8">
                     <div className="space-y-5">
                         <div className="space-y-4">
@@ -66,7 +66,7 @@ export const AppearanceSection: React.FC = () => {
                                 onValueChange={(val: string) => setConfig(prev => ({ ...prev, toastSize: val as ToastSize }))}
                                 className="w-full"
                             >
-                                <TabsList className="grid w-full grid-cols-5 bg-muted/50 p-1 rounded-xl">
+                                <TabsList className="grid w-full grid-cols-5">
                                     {Object.keys(TOAST_SIZES).map(size => (
                                         <TabsTrigger key={size} value={size} className="text-[10px] uppercase font-bold py-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
                                             {size}
@@ -112,7 +112,7 @@ export const AppearanceSection: React.FC = () => {
                                             onValueChange={(val) => setConfig(c => ({ ...c, loaderPosition: val as 'top' | 'bottom' }))}
                                             className="w-full"
                                         >
-                                            <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1 rounded-xl">
+                                            <TabsList className="grid w-full grid-cols-2">
                                                 <TabsTrigger value="top" className="text-[10px] uppercase font-bold py-2 rounded-lg data-[state=active]:bg-background">Top</TabsTrigger>
                                                 <TabsTrigger value="bottom" className="text-[10px] uppercase font-bold py-2 rounded-lg data-[state=active]:bg-background">Bottom</TabsTrigger>
                                             </TabsList>
@@ -126,7 +126,7 @@ export const AppearanceSection: React.FC = () => {
                                             onValueChange={(val) => setConfig(c => ({ ...c, loaderVariant: val as 'solid' | 'gradient' }))}
                                             className="w-full"
                                         >
-                                            <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1 rounded-xl">
+                                            <TabsList className="grid w-full grid-cols-2">
                                                 <TabsTrigger value="solid" className="text-[10px] uppercase font-bold py-2 rounded-lg data-[state=active]:bg-background">Solid</TabsTrigger>
                                                 <TabsTrigger value="gradient" className="text-[10px] uppercase font-bold py-2 rounded-lg data-[state=active]:bg-background">Gradient</TabsTrigger>
                                             </TabsList>

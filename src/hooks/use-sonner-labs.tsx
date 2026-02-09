@@ -5,23 +5,24 @@ import { useTheme } from 'next-themes';
 import { ToastConfig, ToastType, StateIconConfig, SoundPreset, ToastTheme } from '@/types/toast-types';
 import { THEMES, TOAST_SIZES, ensureImportant } from '@/constants/toast-presets';
 import {
-    CheckCircle2,
-    ShieldCheck,
-    Info,
-    AlertCircle,
-    AlertTriangle,
-    Star,
-    Heart,
-    Smile,
-    Bell,
-    Zap,
-    Flame,
-    Coffee,
-    Ghost,
-    Terminal,
-    RefreshCw,
-    Sparkles,
-    Loader2,
+    // Current
+    CheckCircle2, ShieldCheck, Info, AlertCircle, AlertTriangle, Star, Heart, Smile, Bell, Zap, Flame, Coffee, Ghost, Terminal, RefreshCw, Sparkles, Loader2,
+    // Communication
+    Mail, MessageSquare, Phone, Send, Share2,
+    // General / UI
+    Settings, Search, Menu, Trash2, Plus, Minus, Check, X, ExternalLink, Eye, EyeOff, Lock, Unlock, User, Users,
+    // Status
+    CircleCheck, CircleAlert, CircleX, CircleHelp, CirclePause, CircleStop, TriangleAlert,
+    // Media
+    Play, Pause, Volume2, Music2, Image,
+    // Development
+    Code2, Database, Cpu, Globe, Activity,
+    // Commerce
+    ShoppingCart, CreditCard, Tag, Wallet,
+    // Nature / Weather
+    Sun, Moon, Cloud, Wind,
+    // Others
+    Target, Flag, Anchor, Award, Trophy, Rocket, Gift, Briefcase, Calendar, Clock, MapPin,
     LucideIcon
 } from 'lucide-react';
 
@@ -32,11 +33,45 @@ declare global {
 }
 
 export const ICON_PRESETS: Record<string, LucideIcon> = {
+    // Standard States
     check: CheckCircle2,
     shield: ShieldCheck,
     info: Info,
     alert: AlertCircle,
     warning: AlertTriangle,
+    error: CircleX,
+    help: CircleHelp,
+
+    // UI / Actions
+    settings: Settings,
+    search: Search,
+    menu: Menu,
+    trash: Trash2,
+    plus: Plus,
+    minus: Minus,
+    close: X,
+    external: ExternalLink,
+    eye: Eye,
+    eyeOff: EyeOff,
+    lock: Lock,
+    unlock: Unlock,
+    user: User,
+    users: Users,
+
+    // Status Icons
+    successCircle: CircleCheck,
+    alertCircle: CircleAlert,
+    stop: CircleStop,
+    pause: CirclePause,
+
+    // Communication
+    mail: Mail,
+    message: MessageSquare,
+    phone: Phone,
+    send: Send,
+    share: Share2,
+
+    // Personality / Fun
     star: Star,
     heart: Heart,
     smile: Smile,
@@ -46,9 +81,42 @@ export const ICON_PRESETS: Record<string, LucideIcon> = {
     coffee: Coffee,
     ghost: Ghost,
     terminal: Terminal,
-    refresh: RefreshCw,
     sparkles: Sparkles,
-    loader: Loader2
+    rocket: Rocket,
+    gift: Gift,
+    trophy: Trophy,
+    award: Award,
+
+    // Development / System
+    code: Code2,
+    database: Database,
+    cpu: Cpu,
+    globe: Globe,
+    activity: Activity,
+    terminal_alt: Terminal,
+    refresh: RefreshCw,
+    loader: Loader2,
+
+    // Commerce
+    cart: ShoppingCart,
+    card: CreditCard,
+    tag: Tag,
+    wallet: Wallet,
+
+    // Time / Location
+    calendar: Calendar,
+    clock: Clock,
+    map: MapPin,
+
+    // Misc
+    sun: Sun,
+    moon: Moon,
+    cloud: Cloud,
+    wind: Wind,
+    target: Target,
+    flag: Flag,
+    anchor: Anchor,
+    briefcase: Briefcase,
 };
 
 const DEFAULT_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`;
@@ -80,7 +148,7 @@ export function useSonnerLabs() {
             warning: { mode: 'preset', preset: 'warning', customSvg: DEFAULT_SVG },
             info: { mode: 'preset', preset: 'info', customSvg: DEFAULT_SVG },
             loading: { mode: 'preset', preset: 'refresh', customSvg: DEFAULT_SVG },
-            default: { mode: 'preset', preset: 'zap', customSvg: DEFAULT_SVG },
+            default: { mode: 'default', preset: 'zap', customSvg: DEFAULT_SVG },
         }
     });
 
@@ -163,7 +231,7 @@ export function useSonnerLabs() {
 
     const getIconForState = useCallback((type: ToastType) => {
         const stateConfig = config.iconConfigs[type];
-        if (stateConfig.mode === 'none') return <div className="w-0 h-0 opacity-0" />;
+        if (stateConfig.mode === 'default') return undefined;
 
         if (stateConfig.mode === 'custom') {
             return (
@@ -192,14 +260,24 @@ export function useSonnerLabs() {
             description: `Synchronized visual and auditory feedback.`,
         };
 
+        const icon = getIconForState(type);
+        const toastOptions = { ...options, ...(icon ? { icon } : {}) };
+
         switch (type) {
-            case 'success': toast.success('Action Confirmed', options); break;
-            case 'error': toast.error('System Refusal', options); break;
-            case 'warning': toast.warning('Security Alert', options); break;
-            case 'loading': toast.loading('Processing Engine...', options); break;
-            default: toast('Dynamic Preview Active', options);
+            case 'success': toast.success('Action Confirmed', toastOptions); break;
+            case 'error': toast.error('System Refusal', toastOptions); break;
+            case 'warning': toast.warning('Security Alert', toastOptions); break;
+            case 'info': toast.info('System Update', toastOptions); break;
+            case 'loading':
+                toast('Processing Engine...', {
+                    ...toastOptions,
+                    icon: icon || <Loader2 className="animate-spin size-4" />,
+                    duration: config.duration
+                });
+                break;
+            default: toast('Dynamic Preview Active', toastOptions);
         }
-    }, [config.soundEnabled, config.soundPreset, playSynthesizedSound]);
+    }, [config.soundEnabled, config.soundPreset, config.duration, playSynthesizedSound, getIconForState]);
 
     // Unified Feedback & Auto-Preview Engine
     const isFirstRender = useRef(true);
@@ -257,9 +335,9 @@ export function useSonnerLabs() {
             previewMode, theme, soundEnabled, soundVolume
         } = config;
 
-        const generateIconString = (type: ToastType): string => {
+        const generateIconString = (type: ToastType): string | null => {
             const cfg = iconConfigs[type];
-            if (cfg.mode === 'none') return 'null';
+            if (cfg.mode === 'default') return null;
             if (cfg.mode === 'custom') {
                 return `(
           <div 
@@ -270,8 +348,16 @@ export function useSonnerLabs() {
         )`;
             }
             const IconName = cfg.preset.charAt(0).toUpperCase() + cfg.preset.slice(1);
-            return `<${IconName} size={${iconSize}} ${type === 'loading' ? 'className="animate-spin" ' : ''}/>`;
+            return `(<${IconName} size={${iconSize}} ${type === 'loading' ? 'className="animate-spin" ' : ''}/>)`;
         };
+
+        const iconsMap = (['success', 'error', 'warning', 'info', 'loading'] as ToastType[])
+            .map(type => ({ type, code: generateIconString(type) }))
+            .filter(item => item.code !== null);
+
+        const iconsObjectCode = iconsMap.length > 0
+            ? `{\n        ${iconsMap.map(m => `${m.type}: ${m.code}`).join(',\n        ')}\n      }`
+            : '{}';
 
         const lucideIcons = Object.values(iconConfigs)
             .filter(cfg => cfg.mode === 'preset')
@@ -365,13 +451,7 @@ export function ToasterSetup() {
       offset="${offset}px"
       gap={${gap}}
       theme="${previewMode}"
-      icons={{
-        success: ${generateIconString('success')},
-        error: ${generateIconString('error')},
-        warning: ${generateIconString('warning')},
-        info: ${generateIconString('info')},
-        loading: ${generateIconString('loading')},
-      }}
+      icons={${iconsObjectCode}}
       toastOptions={{
         className: 'sonnerLB-toast-shell ${showProgressBar ? 'sonnerLB-has-loader' : ''}',
       }}

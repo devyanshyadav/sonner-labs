@@ -8,9 +8,8 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Music, Volume2, VolumeX, Activity } from 'lucide-react';
+import { Music, Volume2, VolumeX, Activity, AudioLines } from 'lucide-react';
 import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
-import { BsSoundwave } from 'react-icons/bs';
 
 export const AudioSection: React.FC = () => {
     const {
@@ -70,7 +69,7 @@ export const AudioSection: React.FC = () => {
                             >
                                 <span className="flex items-center justify-between w-full">
                                     <span className="text-xs font-semibold capitalize tracking-tight">{preset}</span>
-                                    <BsSoundwave className={`w-4 h-4 transition-opacity ${config.soundPreset === preset ? 'opacity-100' : 'opacity-0'}`} />
+                                    <AudioLines className={`w-4 h-4 transition-opacity ${config.soundPreset === preset ? 'opacity-100' : 'opacity-0'}`} />
                                 </span>
                             </Button>
                         ))}

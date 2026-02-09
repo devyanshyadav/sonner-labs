@@ -37,7 +37,7 @@ export const MotionSection: React.FC = () => {
                 </div>
             </section>
 
-            <Card className="border-none bg-muted/30 shadow-none">
+            <Card className="shadow-none bg-muted/20">
                 <CardContent>
                     <div className="py-6 space-y-8">
                         <div className="space-y-4">

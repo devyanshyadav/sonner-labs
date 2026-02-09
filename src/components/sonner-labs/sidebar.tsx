@@ -10,7 +10,9 @@ import {
     Activity,
     Code as CodeIcon,
     ChevronRight,
-    Settings2
+    Settings2,
+    Shapes,
+    Zap
 } from 'lucide-react';
 import { ThemeSection } from './sections/theme-section';
 import { AppearanceSection } from './sections/appearance-section';
@@ -23,10 +25,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
-import { HiOutlineColorSwatch } from "react-icons/hi";
-import { GrView } from 'react-icons/gr';
-import { IoShapesOutline } from 'react-icons/io5';
-import { MdOutlineAnimation } from 'react-icons/md';
 import Logo from './logo';
 
 export const Sidebar = () => {
@@ -37,11 +35,11 @@ export const Sidebar = () => {
     } = useSonnerLabsContext();
 
     const tabs: { id: string, icon: React.ComponentType<{ className?: string }>, label: string }[] = [
-        { id: 'themes', icon: HiOutlineColorSwatch, label: 'Themes' },
-        { id: 'appearance', icon: GrView, label: 'Look' },
-        { id: 'icon', icon: IoShapesOutline, label: 'Icons' },
+        { id: 'themes', icon: Palette, label: 'Themes' },
+        { id: 'appearance', icon: Eye, label: 'Look' },
+        { id: 'icon', icon: Shapes, label: 'Icons' },
         { id: 'audio', icon: Music, label: 'Audio' },
-        { id: 'motion', icon: MdOutlineAnimation, label: 'Motion' },
+        { id: 'motion', icon: Zap, label: 'Motion' },
     ];
 
     return (

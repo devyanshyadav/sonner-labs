@@ -1,7 +1,7 @@
 
 export type ToastPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 export type ToastSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-export type IconMode = 'preset' | 'custom' | 'none';
+export type IconMode = 'default' | 'preset' | 'custom';
 export type ToastType = 'success' | 'error' | 'info' | 'warning' | 'loading' | 'default';
 export type SoundPreset = 'none' | 'pop' | 'success' | 'error' | 'digital' | 'dock';
 
