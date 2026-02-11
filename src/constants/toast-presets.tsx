@@ -315,7 +315,7 @@ ${BASE_SHELL_OBJECT.all}
   --slb-padding: 18px 24px;
   --slb-font-size: 14px;
   --slb-duration: 4000ms;
-  --slb-loader-inset: auto 24px 10px 24px;
+  --slb-loader-inset: auto 0 0 0;
   --slb-loader-bg: var(--slb-primary);
 }
 
@@ -618,7 +618,7 @@ ${BASE_SHELL_OBJECT.all}
   --slb-muted: #4f566b;  /* Slate gray */
   --slb-primary: #635bff; /* Iconic Stripe Indigo */
   --slb-radius: 8px;
-  --slb-border-width: 0px; /* Stripe often uses shadows instead of borders */
+  --slb-border-width: 1px;
   
   /* The "Elevated" Stripe Shadow - Multi-layered and soft */
   --slb-shadow: 0 50px 100px -20px rgba(50, 50, 93, 0.25), 
@@ -709,7 +709,7 @@ ${BASE_SHELL_OBJECT.all}
   --slb-padding: 16px 24px;
   --slb-font-size: 14px;
   --slb-duration: 4000ms;
-  --slb-loader-inset: auto 24px 8px 24px;
+  --slb-loader-inset: auto 0 0 0;
   --slb-loader-bg: var(--slb-primary);
 }
 
@@ -1333,7 +1333,7 @@ ${BASE_SHELL_OBJECT.all}
   --slb-padding: 18px 22px;
   --slb-font-size: 14px;
   --slb-duration: 4000ms;
-  --slb-loader-inset: auto 20px 12px 20px;
+  --slb-loader-inset: auto 0 0 0;
   --slb-loader-bg: var(--slb-primary);
 }
 
@@ -1416,7 +1416,7 @@ ${BASE_SHELL_OBJECT.all}
   --slb-muted: #6366f1;  /* indigo-500 */
   --slb-primary: #4f46e5; /* indigo-600 */
   --slb-radius: 28px;     /* Extra rounding for that squishy feel */
-  --slb-border-width: 0px;
+  --slb-border-width: 1px;
   
   /* The "Clay" Shadow: Large outer blur + Soft ambient occlusion */
   --slb-shadow: 12px 12px 24px #beccf2, -12px -12px 24px #ffffff;
@@ -1425,7 +1425,7 @@ ${BASE_SHELL_OBJECT.all}
   --slb-padding: 20px 24px;
   --slb-font-size: 14px;
   --slb-duration: 4000ms;
-  --slb-loader-inset: auto 24px 12px 24px;
+  --slb-loader-inset: auto 0 0 0;
   --slb-loader-bg: var(--slb-primary);
 }
 

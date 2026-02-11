@@ -552,14 +552,13 @@ ${ensureImportant(theme.customCss)}`;
             '--slb-font-size': size.fontSize,
         });
     }, [
-        config.theme.id,
         config.duration,
         config.gap,
         config.offset,
         config.loaderPosition,
         config.loaderVariant,
         config.toastSize,
-        config.previewMode, // Added to ensure sync on mode toggle
+        config.previewMode,
         updateCssVars
     ]);
 
