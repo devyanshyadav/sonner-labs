@@ -122,34 +122,42 @@ export const ICON_PRESETS: Record<string, LucideIcon> = {
 const DEFAULT_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`;
 
 export function useSonnerLabs() {
-    const [config, setConfig] = useState<ToastConfig>({
-        position: 'bottom-right',
-        expand: false,
-        closeButton: true,
-        showProgressBar: true,
-        loaderPosition: 'bottom',
-        loaderVariant: 'solid',
-        toastSize: 'md',
-        duration: 4000,
-        offset: 32,
-        gap: 12,
-        shadowIntensity: 0.2,
-        blurIntensity: 0,
-        theme: THEMES[0],
-        previewMode: 'dark',
-        useDynamicVariables: false,
-        iconSize: 20,
-        soundEnabled: false,
-        soundPreset: 'pop',
-        soundVolume: 0.5,
-        iconConfigs: {
-            success: { mode: 'preset', preset: 'check', customSvg: DEFAULT_SVG },
-            error: { mode: 'preset', preset: 'alert', customSvg: DEFAULT_SVG },
-            warning: { mode: 'preset', preset: 'warning', customSvg: DEFAULT_SVG },
-            info: { mode: 'preset', preset: 'info', customSvg: DEFAULT_SVG },
-            loading: { mode: 'preset', preset: 'refresh', customSvg: DEFAULT_SVG },
-            default: { mode: 'default', preset: 'zap', customSvg: DEFAULT_SVG },
-        }
+    const [config, setConfig] = useState<ToastConfig>(() => {
+        const initialTheme = THEMES[0];
+        const baseConfig: Omit<ToastConfig, 'theme'> = {
+            position: 'bottom-right',
+            expand: false,
+            closeButton: true,
+            showProgressBar: true,
+            loaderPosition: 'bottom',
+            loaderVariant: 'solid',
+            toastSize: 'md',
+            duration: 4000,
+            offset: 32,
+            gap: 12,
+            shadowIntensity: 0.2,
+            blurIntensity: 0,
+            previewMode: 'dark',
+            useDynamicVariables: false,
+            iconSize: 20,
+            soundEnabled: false,
+            soundPreset: 'pop',
+            soundVolume: 0.5,
+            iconConfigs: {
+                success: { mode: 'preset', preset: 'check', customSvg: DEFAULT_SVG },
+                error: { mode: 'preset', preset: 'alert', customSvg: DEFAULT_SVG },
+                warning: { mode: 'preset', preset: 'warning', customSvg: DEFAULT_SVG },
+                info: { mode: 'preset', preset: 'info', customSvg: DEFAULT_SVG },
+                loading: { mode: 'preset', preset: 'refresh', customSvg: DEFAULT_SVG },
+                default: { mode: 'default', preset: 'zap', customSvg: DEFAULT_SVG },
+            }
+        };
+
+        return {
+            ...baseConfig,
+            theme: initialTheme,
+            ...(initialTheme.defaultConfig || {})
+        };
     });
 
     const [activeTab, setActiveTab] = useState('themes');

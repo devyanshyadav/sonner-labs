@@ -46,7 +46,13 @@ export const ThemeSection: React.FC = () => {
                             <Card className='p-0.5 bg-card shadow-none'>
                                 <button
                                     className={`rounded-lg p-3 group/theme bg-muted ${config.theme.id === t.id ? 'ring-2 ring-primary/50' : ''}`}
-                                    onClick={() => setConfig(prev => ({ ...prev, theme: t }))}
+                                    onClick={() => {
+                                        setConfig(prev => ({
+                                            ...prev,
+                                            theme: t,
+                                            ...(t.defaultConfig || {})
+                                        }));
+                                    }}
                                 >
                                     <span className="flex items-center gap-4 w-full text-left">
                                         <span className="w-10 h-10 rounded-lg shrink-0 border border-border overflow-hidden relative" style={{ background: bg }}>

@@ -370,6 +370,193 @@ ${BASE_SHELL_OBJECT.all}
 `
   },
   {
+    id: 'warcraftcn-ui',
+    name: 'WarcraftCN UI (Beta)',
+    description: 'Iconic visual style of classic Warcraft III to modern web applications.',
+    customCss: `
+:root {
+  /* War Light Mode (Aged Parchment/Iron) */
+  --slb-bg: #2c1e14;     /* Dark mahogany wood */
+  --slb-border: #4a4a4a; /* Iron frame */
+  --slb-fg: #f3e5ab;     /* Golden parchment */
+  --slb-muted: #fef3c6;  /* Sienna wood grain */
+  --slb-primary: #ffd700; /* Forged Gold */
+  --slb-radius: 0px;      /* Sharp forged edges */
+  --slb-border-width: 4px;
+  
+  /* Deep atmospheric shadow */
+  --slb-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), inset 0 0 60px rgba(0, 0, 0, 0.5);
+  
+  --slb-width: 400px;
+  --slb-padding: 18px 24px;
+  --slb-font-size: 14px;
+  --slb-duration: 4000ms;
+  --slb-loader-inset: auto 0 0 0;
+  --slb-loader-bg: #ffd700;
+}
+
+.dark {
+  /* War Dark Mode (Night Siege) */
+  --slb-bg: #120a06;     /* Charred wood */
+  --slb-border: #222222; /* Cold iron */
+  --slb-fg: #e0d0b0;
+  --slb-muted: #fef3c6;
+  --slb-primary: #ffcc00;
+  --slb-loader-bg: #ffcc00;
+  --slb-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 0 100px rgba(0, 0, 0, 0.8);
+}
+
+${BASE_SHELL_OBJECT.all}
+
+/* Perfection Details: RTS Combat UI */
+.sonnerLB-toast-shell {
+  font-family: 'Cinzel', 'Georgia', serif, system-ui !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  
+  /* Aged Mahogany Wood Plank Chassis (Lightened for visibility) */
+  background-color: #3e2b1d !important;
+  background-image: 
+    /* Horizontal Plank Dividers */
+    repeating-linear-gradient(180deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 1px, transparent 1px, transparent 48px),
+    /* Deepening the warmth with a soft overlay */
+    linear-gradient(rgba(139, 69, 19, 0.1), rgba(0, 0, 0, 0.1)),
+    /* Core Wood Texture fiber */
+    url("https://www.transparenttextures.com/patterns/dark-wood.png") !important;
+  background-size: 100% 48px, 100% 100%, auto !important;
+
+  /* The Channeled Iron Frame (Physical Border Implementation) */
+  border: 8px solid !important;
+  border-image: linear-gradient(
+    to bottom,
+    #5d5d5d 0%,    /* Light ridge top */
+    #3e3e3e 30%,   /* Sloping into channel */
+    #0a0a0a 45%,   /* THE GROOVE (Dark center) */
+    #0a0a0a 55%,   /* Groove floor */
+    #3e3e3e 70%,   /* Sloping out */
+    #1a1a1a 100%   /* Bottom edge shadow */
+  ) 12 !important;
+
+  /* Decorative Inner filigree */
+  outline: 2px solid rgba(122, 106, 74, 0.3) !important;
+  
+  /* Physical Lift & Internal Ambient Occlusion */
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    inset 0 0 50px rgba(0, 0, 0, 0.6) !important;
+  
+  /* CRITICAL: Anchor and Dynamic Clearance for Hardware */
+  overflow: visible !important;
+  margin: var(--slb-gap, 40px) 20px !important;
+}
+
+.sonnerLB-toast-shell [data-title] {
+  font-weight: 800 !important;
+  color: #ffd700 !important; /* Gold Title */
+  text-shadow: 2px 2px 2px rgba(0,0,0,0.8) !important;
+  display: block;
+  border-bottom: 2px solid rgba(255, 215, 0, 0.2) !important;
+  padding-bottom: 6px !important;
+  margin-bottom: 8px !important;
+}
+
+/* Forged Metal Loader with Ember Glow */
+.sonnerLB-has-loader::after {
+  height: 4px !important;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.6) !important;
+  background: linear-gradient(to right, #ff4500, #ffcc00) !important;
+}
+
+/* Close button - Styled like a Forged Metallic Nail Head */
+.sonnerLB-toast-shell [data-close-button] {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 35%, #888 0%, #444 40%, #222 70%, #000 100%) !important;
+  border: 2px solid #555 !important;
+  color: #ffd700 !important;
+  box-shadow: 
+    2px 2px 5px rgba(0,0,0,0.8),
+    inset -1px -1px 2px rgba(255,255,255,0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  top: 8px !important;
+  right: 8px !important;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  z-index: 300 !important;
+}
+
+.sonnerLB-toast-shell [data-close-button]:hover {
+  background: radial-gradient(circle at 35% 35%, #ff8c00 0%, #ff4500 50%, #8b0000 100%) !important;
+  border-color: #ffd700 !important;
+  color: #fff !important;
+  transform: rotate(90deg) !important;
+  box-shadow: 0 0 20px rgba(255,69,0,0.8) !important;
+}
+
+.sonnerLB-toast-shell [data-close-button] svg {
+  width: 12px !important;
+  height: 12px !important;
+  stroke-width: 4px !important;
+}
+
+/* 3D Master-Forged Corner Rivets & Dynamic Connecting Chains */
+.sonnerLB-toast-shell [data-title]::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  /* Top offset matches the dynamic gap */
+  top: calc(-1 * var(--slb-gap, 40px)) !important;
+  left: -14px !important;
+  right: -14px !important;
+  bottom: -14px !important;
+  pointer-events: none !important;
+  
+  background-image: 
+    /* 4x 3D Metallic Rivet Gradients */
+    radial-gradient(circle at 10px 10px, #fff 0%, #aaa 30%, #444 60%, #111 100%),
+    radial-gradient(circle at 10px 10px, #fff 0%, #aaa 30%, #444 60%, #111 100%),
+    radial-gradient(circle at 10px 10px, #fff 0%, #aaa 30%, #444 60%, #111 100%),
+    radial-gradient(circle at 10px 10px, #fff 0%, #aaa 30%, #444 60%, #111 100%),
+    
+    /* 2x Dynamic Forged Chain Links */
+    repeating-linear-gradient(180deg, #111 0px, #111 2px, #555 2px, #555 8px, #888 8px, #888 10px, #555 10px, #555 16px),
+    repeating-linear-gradient(180deg, #111 0px, #111 2px, #555 2px, #555 8px, #888 8px, #888 10px, #555 10px, #555 16px) !important;
+
+  /* Chains match the dynamic slb-gap variable exactly */
+  background-size: 
+    28px 28px, 28px 28px, 28px 28px, 28px 28px, 
+    10px var(--slb-gap, 40px), 10px var(--slb-gap, 40px) !important;
+  background-repeat: no-repeat !important;
+
+  /* TL/TR Rivets are centered relative to the dynamic top offset */
+  background-position: 
+    left 0 bottom 0,  /* BL Rivet */
+    right 0 bottom 0, /* BR Rivet */
+    left 0 top calc(var(--slb-gap, 40px) - 14px),   /* TL Rivet */
+    right 0 top calc(var(--slb-gap, 40px) - 14px),  /* TR Rivet */
+    left 9px top 0,   /* Left Chain Anchor */
+    right 9px top 0 !important; /* Right Chain Anchor */
+  
+  z-index:1 !important;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8)) !important;
+}
+
+.sonnerLB-toast-shell [data-button]:hover {
+  filter: brightness(1.2) !important;
+  box-shadow: 0 0 15px rgba(66, 153, 225, 0.6) !important;
+}
+`
+    ,
+    defaultConfig: {
+      position: 'top-right',
+      gap: 40,
+      expand: true,
+    }
+  },
+  {
     id: 'linear',
     name: 'Linear',
     description: 'The pinnacle of developer tool aesthetics.',
@@ -1648,5 +1835,6 @@ ${BASE_SHELL_OBJECT.all}
 }
 `
   },
+
 
 ];

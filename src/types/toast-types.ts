@@ -16,6 +16,7 @@ export interface ToastTheme {
     name: string;
     description: string;
     customCss: string;
+    defaultConfig?: Partial<Omit<ToastConfig, 'theme'>>;
 }
 
 export interface ToastConfig {
