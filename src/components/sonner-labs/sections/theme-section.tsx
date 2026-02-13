@@ -6,6 +6,7 @@ import { THEMES } from '@/constants/toast-presets';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useSonnerLabsContext } from '@/components/sonner-labs/sonner-labs-provider';
+import { BASE_CONFIG } from '@/hooks/use-sonner-labs';
 
 export const ThemeSection: React.FC = () => {
     const { config, setConfig, playInteractionSound } = useSonnerLabsContext();
@@ -49,6 +50,14 @@ export const ThemeSection: React.FC = () => {
                                     onClick={() => {
                                         setConfig(prev => ({
                                             ...prev,
+                                            ...BASE_CONFIG,
+                                            // 🛡️ Preserve Global Session Preferences
+                                            previewMode: prev.previewMode,
+                                            soundEnabled: prev.soundEnabled,
+                                            soundVolume: prev.soundVolume,
+                                            useDynamicVariables: prev.useDynamicVariables,
+                                            iconConfigs: prev.iconConfigs, // Keep custom icon choices
+
                                             theme: t,
                                             ...(t.defaultConfig || {})
                                         }));
