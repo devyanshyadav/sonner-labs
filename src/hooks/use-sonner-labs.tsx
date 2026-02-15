@@ -340,7 +340,7 @@ export function useSonnerLabs() {
         const {
             position, expand, duration, offset, gap, shadowIntensity, blurIntensity,
             iconSize, iconConfigs, toastSize, loaderPosition, loaderVariant, showProgressBar,
-            previewMode, theme, soundEnabled, soundVolume
+            previewMode, theme, soundEnabled, soundVolume, closeButton
         } = config;
 
         const generateIconString = (type: ToastType): string | null => {
@@ -455,6 +455,7 @@ export function ToasterSetup() {
     <Toaster 
       position="${position}"
       expand={${expand}}
+      closeButton={${closeButton}}
       duration={${duration}}
       offset="${offset}px"
       gap={${gap}}
