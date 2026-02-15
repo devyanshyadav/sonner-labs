@@ -1835,6 +1835,115 @@ ${BASE_SHELL_OBJECT.all}
 }
 `
   },
+  {
+    id: 'luminous-pill',
+    name: 'Luminous Pill',
+    description: 'A premium capsule shape with a soft floating aura.',
+    customCss: `
+:root {
+  --slb-bg: rgba(129, 140, 248, 0.1); /* Subtle Lavender-White */
+  --slb-border: rgba(255, 255, 255, 0.8);
+  --slb-fg: #312e81; 
+  --slb-muted: #6366f1;
+  --slb-primary: #818cf8; 
+  --slb-radius: 999px;
+  --slb-border-width: 1px;
+  --slb-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+  --slb-width: fit-content;
+  --slb-padding: 8px 18px;
+  --slb-font-size: 13px;
+}
+
+.dark {
+  --slb-bg: rgba(17, 24, 39, 0.9); /* Subtle Deep Slate */
+  --slb-border: rgba(255, 255, 255, 0.15);
+  --slb-fg: #f1f5f9;
+  --slb-muted: #94a3b8;
+  --slb-primary: #a5b4fc;
+  --slb-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+${BASE_SHELL_OBJECT.all}
+
+.sonnerLB-toast-shell {
+  backdrop-filter: blur(20px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: fit-content !important;
+  min-width: 140px !important;
+  padding: 8px 18px !important;
+  border: var(--slb-border-width) solid var(--slb-border) !important;
+  
+  /* Glass Physique: Internal reflections and depth */
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05)) !important;
+  box-shadow: 
+    var(--slb-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.05) !important;
+}
 
 
+.sonnerLB-toast-shell [data-description] {
+  display: none !important;
+}
+
+.sonnerLB-toast-shell [data-title] {
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 0 !important;
+  font-size: 13px !important;
+  color: var(--slb-fg) !important;
+}
+
+.sonnerLB-toast-shell [data-icon] {
+  background: var(--slb-primary) !important;
+  color: white !important;
+  border-radius: 50% !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 2px 8px rgba(129, 140, 248, 0.3) !important;
+}
+
+.sonnerLB-toast-shell [data-icon] svg {
+  width: 13px !important;
+  height: 13px !important;
+}
+
+/* Glowing Fiber-Optic Loader */
+.sonnerLB-has-loader::after {
+  height: 2px !important;
+  border-radius: 999px !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: linear-gradient(to right, transparent, var(--slb-primary), transparent) !important;
+  opacity: 0.8 !important;
+  box-shadow: 0 -2px 10px var(--slb-primary) !important;
+}
+
+.sonnerLB-toast-shell [data-close-button] {
+  background: rgba(0,0,0,0.05) !important;
+  border: none !important;
+  top: 1px !important;
+  right: 5px !important;
+  
+}
+
+
+    `,
+    defaultConfig: {
+      gap: 10,
+      closeButton: false,
+      expand: true
+    }
+  },
 ];

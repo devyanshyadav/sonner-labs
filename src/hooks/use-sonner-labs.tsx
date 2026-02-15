@@ -32,92 +32,97 @@ declare global {
     }
 }
 
-export const ICON_PRESETS: Record<string, LucideIcon> = {
+const ICON_CONFIG: Record<string, { component: LucideIcon, name: string }> = {
     // Standard States
-    check: CheckCircle2,
-    shield: ShieldCheck,
-    info: Info,
-    alert: AlertCircle,
-    warning: AlertTriangle,
-    error: CircleX,
-    help: CircleHelp,
+    check: { component: CheckCircle2, name: 'CheckCircle2' },
+    shield: { component: ShieldCheck, name: 'ShieldCheck' },
+    info: { component: Info, name: 'Info' },
+    alert: { component: AlertCircle, name: 'AlertCircle' },
+    warning: { component: AlertTriangle, name: 'AlertTriangle' },
+    error: { component: CircleX, name: 'CircleX' },
+    help: { component: CircleHelp, name: 'CircleHelp' },
 
     // UI / Actions
-    settings: Settings,
-    search: Search,
-    menu: Menu,
-    trash: Trash2,
-    plus: Plus,
-    minus: Minus,
-    close: X,
-    external: ExternalLink,
-    eye: Eye,
-    eyeOff: EyeOff,
-    lock: Lock,
-    unlock: Unlock,
-    user: User,
-    users: Users,
+    settings: { component: Settings, name: 'Settings' },
+    search: { component: Search, name: 'Search' },
+    menu: { component: Menu, name: 'Menu' },
+    trash: { component: Trash2, name: 'Trash2' },
+    plus: { component: Plus, name: 'Plus' },
+    minus: { component: Minus, name: 'Minus' },
+    close: { component: X, name: 'X' },
+    external: { component: ExternalLink, name: 'ExternalLink' },
+    eye: { component: Eye, name: 'Eye' },
+    eyeOff: { component: EyeOff, name: 'EyeOff' },
+    lock: { component: Lock, name: 'Lock' },
+    unlock: { component: Unlock, name: 'Unlock' },
+    user: { component: User, name: 'User' },
+    users: { component: Users, name: 'Users' },
 
     // Status Icons
-    successCircle: CircleCheck,
-    alertCircle: CircleAlert,
-    stop: CircleStop,
-    pause: CirclePause,
+    successCircle: { component: CircleCheck, name: 'CircleCheck' },
+    alertCircle: { component: CircleAlert, name: 'CircleAlert' },
+    stop: { component: CircleStop, name: 'CircleStop' },
+    pause: { component: CirclePause, name: 'CirclePause' },
 
     // Communication
-    mail: Mail,
-    message: MessageSquare,
-    phone: Phone,
-    send: Send,
-    share: Share2,
+    mail: { component: Mail, name: 'Mail' },
+    message: { component: MessageSquare, name: 'MessageSquare' },
+    phone: { component: Phone, name: 'Phone' },
+    send: { component: Send, name: 'Send' },
+    share: { component: Share2, name: 'Share2' },
 
     // Personality / Fun
-    star: Star,
-    heart: Heart,
-    smile: Smile,
-    bell: Bell,
-    zap: Zap,
-    flame: Flame,
-    coffee: Coffee,
-    ghost: Ghost,
-    terminal: Terminal,
-    sparkles: Sparkles,
-    rocket: Rocket,
-    gift: Gift,
-    trophy: Trophy,
-    award: Award,
+    star: { component: Star, name: 'Star' },
+    heart: { component: Heart, name: 'Heart' },
+    smile: { component: Smile, name: 'Smile' },
+    bell: { component: Bell, name: 'Bell' },
+    zap: { component: Zap, name: 'Zap' },
+    flame: { component: Flame, name: 'Flame' },
+    coffee: { component: Coffee, name: 'Coffee' },
+    ghost: { component: Ghost, name: 'Ghost' },
+    terminal: { component: Terminal, name: 'Terminal' },
+    sparkles: { component: Sparkles, name: 'Sparkles' },
+    rocket: { component: Rocket, name: 'Rocket' },
+    gift: { component: Gift, name: 'Gift' },
+    trophy: { component: Trophy, name: 'Trophy' },
+    award: { component: Award, name: 'Award' },
 
     // Development / System
-    code: Code2,
-    database: Database,
-    cpu: Cpu,
-    globe: Globe,
-    activity: Activity,
-    terminal_alt: Terminal,
-    refresh: RefreshCw,
-    loader: Loader2,
+    code: { component: Code2, name: 'Code2' },
+    database: { component: Database, name: 'Database' },
+    cpu: { component: Cpu, name: 'Cpu' },
+    globe: { component: Globe, name: 'Globe' },
+    activity: { component: Activity, name: 'Activity' },
+    terminal_alt: { component: Terminal, name: 'Terminal' },
+    refresh: { component: RefreshCw, name: 'RefreshCw' },
+    loader: { component: Loader2, name: 'Loader2' },
 
     // Commerce
-    cart: ShoppingCart,
-    card: CreditCard,
-    tag: Tag,
-    wallet: Wallet,
+    cart: { component: ShoppingCart, name: 'ShoppingCart' },
+    card: { component: CreditCard, name: 'CreditCard' },
+    tag: { component: Tag, name: 'Tag' },
+    wallet: { component: Wallet, name: 'Wallet' },
 
     // Time / Location
-    calendar: Calendar,
-    clock: Clock,
-    map: MapPin,
+    calendar: { component: Calendar, name: 'Calendar' },
+    clock: { component: Clock, name: 'Clock' },
+    map: { component: MapPin, name: 'MapPin' },
 
     // Misc
-    sun: Sun,
-    moon: Moon,
-    cloud: Cloud,
-    wind: Wind,
-    target: Target,
-    flag: Flag,
-    anchor: Anchor,
-    briefcase: Briefcase,
+    sun: { component: Sun, name: 'Sun' },
+    moon: { component: Moon, name: 'Moon' },
+    cloud: { component: Cloud, name: 'Cloud' },
+    wind: { component: Wind, name: 'Wind' },
+    target: { component: Target, name: 'Target' },
+    flag: { component: Flag, name: 'Flag' },
+    anchor: { component: Anchor, name: 'Anchor' },
+    briefcase: { component: Briefcase, name: 'Briefcase' },
 };
+
+export const ICON_PRESETS: Record<string, LucideIcon> = Object.entries(ICON_CONFIG).reduce((acc, [key, val]) => {
+    acc[key] = val.component;
+    return acc;
+}, {} as Record<string, LucideIcon>);
 
 const DEFAULT_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`;
 
@@ -355,7 +360,8 @@ export function useSonnerLabs() {
           />
         )`;
             }
-            const IconName = cfg.preset.charAt(0).toUpperCase() + cfg.preset.slice(1);
+            const presetVal = cfg.preset;
+            const IconName = ICON_CONFIG[presetVal]?.name || (presetVal.charAt(0).toUpperCase() + presetVal.slice(1));
             return `(<${IconName} size={${iconSize}} ${type === 'loading' ? 'className="animate-spin" ' : ''}/>)`;
         };
 
@@ -369,7 +375,7 @@ export function useSonnerLabs() {
 
         const lucideIcons = Object.values(iconConfigs)
             .filter(cfg => cfg.mode === 'preset')
-            .map(cfg => cfg.preset.charAt(0).toUpperCase() + cfg.preset.slice(1));
+            .map(cfg => ICON_CONFIG[cfg.preset]?.name || (cfg.preset.charAt(0).toUpperCase() + cfg.preset.slice(1)));
 
         const uniqueIcons = Array.from(new Set(lucideIcons));
 
